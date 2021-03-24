@@ -1,0 +1,16 @@
+var page = require('webpage').create();  
+page.open($url, function (status) {
+    if (status !== 'success') {
+        console.log('Unable to access network');
+    } else {
+        //var p = page.evaluate(function () {
+          //  return document.getElementsByTagName('html')[0].innerHTML
+        //});
+	var fs = require('fs');
+	var path = 'dump.txt';
+	//var content = 'Hello World!';
+	fs.write(path, page.content, 'w');
+        //console.log(p+" > dump.txt");
+    }
+    phantom.exit();
+});
