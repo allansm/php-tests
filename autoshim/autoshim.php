@@ -1,15 +1,44 @@
 <?php
+include("functions.php");
 $path = file(".path");
 $path2 = readline("Path: ");
-$programname = explode(".",end(explode("/",$path2)))[0];
-//print($programname);
-//remove \n
-$path[0] = str_replace(array("\n", "\r"), '', $path[0]);
-$path[1] = str_replace(array("\n", "\r"), '', $path[1]);
+$programname = getFileName($path2);
+$extension = getFileExtension($path2);
+print($programname.".".$extension."\n");
+$filepath = str_replace($programname.".".$extension, "",$path2);
 
-print($path[0]."program.exe"."\n");
+print($filepath);
 
-copy($path[0]."program.exe",$path[1].$programname.".exe");
-//copy($path[0]."program.ps1",$path[1].$programname.".ps1");
+print($programname."\n");
+print($extension."\n");
 
-file_put_contents($path[1].$programname.".shim", "path = ".$path2);
+$shim = removeLineBreak($path[0]);
+$phpme = removeLineBreak($path[1]);
+$pythonme = removeLineBreak($path[2]);
+$local = removeLineBreak($path[3]);
+
+print($local."\n");
+
+$extension = strtolower($extension);
+
+if($extension == "exe"){
+	print("use shim\n");
+	
+	print($shim."program.exe"."\n");
+
+	copy($shim."program.exe",$local.$programname.".exe");
+
+	file_put_contents($local.$programname.".shim", "path = ".$path2);
+}
+
+else if($extension == "php"){
+	print("use phpme\n");
+	file_put_contents($local.$programname.".bat", "@echo off\n"."start /D \"".$filepath."\" php ".$programname.".php");
+}
+
+else if($extension == "py"){
+	print("use pythonme\n");
+	file_put_contents($local.$programname.".bat", "@echo off\n"."start /D \"".$filepath."\" python ".$programname.".py");
+}
+
+exec("pause");
