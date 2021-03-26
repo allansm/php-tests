@@ -32,11 +32,10 @@ function find($html,$p1,$p2){
 	
 	$linkArray = array();
 	if(preg_match_all("/$p1(.*?)$p2/i", $html, $matches, PREG_SET_ORDER)){
-		//try{
-			foreach ($matches as $match) {
-				array_push($linkArray, array($match[1], @$match[2]));
-			}
-		//}catch(exception $e){}
+		foreach ($matches as $match) {
+			array_push($linkArray, array($match[1], @$match[2]));
+		}
 	}
 	return $linkArray;
 }
+
