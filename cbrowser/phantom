@@ -7,7 +7,7 @@ page.open(@url, function (status) {
           //  return document.getElementsByTagName('html')[0].innerHTML
         //});
 	var fs = require('fs');
-	var path = 'dump.txt';
+	var path = @temp;
 	//var content = 'Hello World!';
 	fs.write(path, page.content, 'w');
         //console.log(p+" > dump.txt");
