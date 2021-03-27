@@ -22,30 +22,27 @@ function storeDump($fn,$url){
 			$found = find($tmp,$p1,$p2);
 			$i = 0;
 			unset($lines);
+			$lines = array();
 			foreach($found as $arr){
-				$lines[$i] = $arr[0];
+				$lines[$i] = removeLineBreak($arr[0]);
 				print($i++.":".$arr[0]."\n\n");
 			}
 		}
-		else if(strtolower($command) == "showlines"){
+		else if(strtolower($command) == "show"){
 			$i = 0;
 			foreach($lines as $line){
 				print($i++.":".$line."\n\n");
 			}
 		}
 		
-		else if(strtolower($command) == "redirecttoline"){
+		else if(strtolower($command) == "redirect"){
 			$url = $lines[readline("line:")];
 			getPage($url);
-			//storeDump(temp2,$url);
 			return $url;
-			//$redirect = true;
-			//break;
 		}
-		else if(strtolower($command) == "addtolines"){
+		else if(strtolower($command) == "add"){
 			$add = readline("text to add:");
 			$op = readline("start or end(s/e)?");
-			//unset($tmp);
 			$tmp2 = array();
 			if($op == "s"){
 				$i = 0;
@@ -63,7 +60,7 @@ function storeDump($fn,$url){
 		
 		else if(strtolower($command) == "lines > dump"){
 			$f = fopen(temp2, 'w');
-			$tmp = implode("",$lines);
+			$tmp = implode("\n",$lines);
 			fwrite($f, $tmp);
 			fclose($f);
 		}
@@ -73,8 +70,8 @@ function storeDump($fn,$url){
 			$tmp = explode(" > ",$command)[1];
 			if(isset($tmp)){
 				$f = fopen($tmp, 'w');
-				$tmp = implode("",$lines);
-				fwrite($f, $tmp);
+				$tmp = implode("\n",$lines);
+				fwrite($f,$tmp);
 				fclose($f);
 				print("stored.\n");
 			}
@@ -85,7 +82,6 @@ function storeDump($fn,$url){
 			$tmp = explode(" ",$command);
 			unset($tmp[0]);
 			$tmp = implode(" ",$tmp);
-			//print($tmp);
 			if(isset($tmp)){
 				$tmp = scandir($tmp);
 				if(isset($tmp)){
@@ -99,7 +95,6 @@ function storeDump($fn,$url){
 			$tmp = explode(" ",$command);
 			unset($tmp[0]);
 			$tmp = implode(" ",$tmp);
-			//print($tmp);
 			if(isset($tmp)){
 				exec($tmp);
 			}
@@ -110,8 +105,9 @@ function storeDump($fn,$url){
 			$i = 0;
 			foreach($lines as $line){
 				if($i >= intval($tmp[0]) && $i <= intval($tmp[1])){
-					print($i++.":".$line."\n\n");
+					print($i.":".$line."\n\n");
 				}
+				$i++;
 			}
 		}
 		else if(!(strpos(strtolower($command)," - ") === false)){
@@ -123,22 +119,39 @@ function storeDump($fn,$url){
 			foreach($lines as $line){
 				if($i >= intval($tmp[0]) && $i <= intval($tmp[1])){
 					$new[$arri++] = $line;
-					print($i++.":".$line."\n\n");
+					print($i.":".$line."\n\n");
 				}
+				$i++;
 			}
 			unset($lines);
 			$lines = $new;
 		}
 		else if(strtolower($command) == "download"){
-			
+			$dld = $lines[readline("line:")];
+			download($dld);
+		}
+		
+		else if(!(strpos(strtolower($command)," @ ") === false)){
+			unset($tmp);
+			$tmp = explode(" @ ",$command);
+			$i = 0;
+			print($tmp[0]." ".$tmp[1]);
+			foreach($lines as $line){
+				if($i >= intval($tmp[0]) && $i <= intval($tmp[1])){
+					download($line);
+				}
+				$i++;
+			}
 		}
 		
 		else if(strtolower($command) == "exitpage"){
-			//break;
 			return "";
 		}
 		else if(strtolower($command) == "exit"){
 			die("bye :D");
+		}
+		else if(strtolower($command) == "help"){
+			print(file_get_contents( "howto.txt" )."\n");
 		}
 	}
 }
@@ -171,6 +184,19 @@ while(true){
 			}
 		}
 	}
+	else if(strtolower($command) == "openpage"){
+		$url =  readline("url:");
+		getPage($url);
+		$url = isset($url)?$url:temp2;
+		$return = storeDump(temp2,$url);
+		while(true){
+			if($return != ""){
+				$return = storeDump(temp2,$return);
+			}else{
+				break;
+			}
+		}
+	}
 	else if(strtolower($command) == "open"){
 		$fn = readline("file path:");
 		storeDump($fn,$url);
@@ -181,7 +207,6 @@ while(true){
 		$tmp = explode(" ",$command);
 		unset($tmp[0]);
 		$tmp = implode(" ",$tmp);
-		//print($tmp);
 		if(isset($tmp)){
 			$tmp = scandir($tmp);
 			if(isset($tmp)){
@@ -195,7 +220,6 @@ while(true){
 		$tmp = explode(" ",$command);
 		unset($tmp[0]);
 		$tmp = implode(" ",$tmp);
-		//print($tmp);
 		if(isset($tmp)){
 			exec($tmp);
 		}
@@ -203,5 +227,8 @@ while(true){
 	
 	else if(strtolower($command) == "exit"){
 		die("bye :D");
+	}
+	else if(strtolower($command) == "help"){
+		print(file_get_contents( "howto.txt" )."\n");
 	}
 }
