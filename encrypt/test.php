@@ -54,28 +54,49 @@ function getKey($keys,$len){
 }
 
 function dec($txt,$k){
-	$k = explode(";",$k);
+	$data = explode(";",$k);
 		
-	$size = sizeOf($k);
+	$size = sizeOf($data)-1;
 
-	$bytes = array();
+	$b = array();
 	$keys = array();
 	$len = array();
 	$shuf = array();
 
 	for($i=0;$i<$size;$i++){
-		$tmp = explode("-",$k);
+		$tmp = explode("-",$data[$i]);
+		print_r($tmp);
 		$key[$i] = $tmp[1];
 		$len[$i] = $tmp[0];	
 	}
-	$it = 0;
 	for($i=0;$i<$size;$i++){
-		$shuf[$i++] = substr($txt,$it,$len[$i]);
-		$it+=$len;
+		print($txt."\n");
+		$shuf[$i] = substr($txt,0,$len[$i]);
+		$txt = substr_replace($txt, "",0, $len[$i]);//str_replace($shuf[$i],"",$txt);
+		
 	}
+	for($i=0;$i<$size;$i++){
+		$b[$i] = $shuf[$key[$i]];
+	}
+	print_r($shuf);
+	print(getString($b));
+}
+function enc($txt){
+	$bytes = getBytes($txt);
+
+	$shuf = $bytes;
+	
+	shuffle($shuf);
+	
+	$arr = array();
+	
+	$arr[0] = getKey(getKeys($bytes,$shuf),getLen($shuf));
+	$arr[1] = implode($shuf);
+
+	return $arr;	
 }
 
-$bytes = getBytes($string);
+/*$bytes = getBytes($string);
 
 $shuf = $bytes;
 
@@ -96,9 +117,22 @@ print_r($len);
 unlink("test.txt");
 unlink("test2.txt");
 
-file_put_contents("test.txt",implode("",$shuf), FILE_APPEND);
-file_put_contents("test2.txt",getKey($keys,$len),FILE_APPEND);
+file_put_contents("test.txt",implode("",$shuf), file_append);
+file_put_contents("test2.txt",getkey($keys,$len),file_append);
 
+$txt = implode("",$shuf);
+ */
+unlink("test.txt");
+unlink("test2.txt");
+
+$arr = enc("i gonna eat your cancer");
+print_r($arr);
+
+file_put_contents("test2.txt",$arr[0], FILE_APPEND);
+file_put_contents("test.txt",$arr[1], FILE_APPEND);
+
+
+dec(file("test.txt")[0],file("test2.txt")[0]);
 
 //print(getString(getBytes($string)));
 
