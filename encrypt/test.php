@@ -72,8 +72,7 @@ function dec($txt,$k){
 	for($i=0;$i<$size;$i++){
 		print($txt."\n");
 		$shuf[$i] = substr($txt,0,$len[$i]);
-		$txt = substr_replace($txt, "",0, $len[$i]);//str_replace($shuf[$i],"",$txt);
-		
+		$txt = substr_replace($txt, "",0, $len[$i]);	
 	}
 	for($i=0;$i<$size;$i++){
 		$b[$i] = $shuf[$key[$i]];
@@ -81,6 +80,7 @@ function dec($txt,$k){
 	print_r($shuf);
 	print(getString($b));
 }
+
 function enc($txt){
 	$bytes = getBytes($txt);
 
@@ -96,43 +96,63 @@ function enc($txt){
 	return $arr;	
 }
 
-/*$bytes = getBytes($string);
+function getAlphabet($pattern){
+	$cfg = explode(";",$pattern);
 
-$shuf = $bytes;
+	$alphabet = array();
+	$i = 0;
+	foreach($cfg as $tmp){
+		$tmp2 = explode(":",$tmp);
+		$alphabet[$i]["key"] = $tmp2[0];
+		$alphabet[$i++]["value"] = $tmp2[1];
+	}
+	return $alphabet;
+}
 
-shuffle($shuf);
+function encry($byte,$alphabet){
+	$randomstuff = "";
+	while($byte != 0){
+		shuffle($alphabet);
+		if($byte >= $alphabet[0]["value"]){
+			$randomstuff.= $alphabet[0]["key"];
+			$byte-= intval($alphabet[0]["value"]);
+		}
+	}
+	return $randomstuff;
+}
 
-print_r($shuf);
+function decry($string,$alphabet){
+	$byte = 0;
+	for($i=0;$i<strlen($string);$i++){
+		foreach($alphabet as $tmp){
+			if($string[$i] == $tmp["key"]){
+				$byte+=intval($tmp["value"]);
+			}
+		}
+	}
+	return $byte;
+}
 
-$keys = getKeys($bytes,$shuf);
-$len = getLen($shuf);
+$alphabet = getAlphabet("f:1;u:2;n:4;w:8;i:16;t:32;h:64;s:128");
 
-print_r($keys);
-print_r($len);
-//print(getKey($keys,$len));
-//$exp = explode(";",getKey($keys,$len));
+$fun = array();
 
-//print_r($exp);
+$bytes = getBytes("i need money or i will die x.x");
 
-unlink("test.txt");
-unlink("test2.txt");
+$i =0;
 
-file_put_contents("test.txt",implode("",$shuf), file_append);
-file_put_contents("test2.txt",getkey($keys,$len),file_append);
+foreach($bytes as $tmp){
+	$fun[$i++] = encry($tmp,$alphabet);	
+}
+print_r($fun);
 
-$txt = implode("",$shuf);
- */
-unlink("test.txt");
-unlink("test2.txt");
+$alot = array();
 
-$arr = enc("i gonna eat your cancer");
-print_r($arr);
+$i=0;
+foreach($fun as $tmp){
+	$alot[$i++] = decry($tmp,$alphabet);	
+}
 
-file_put_contents("test2.txt",$arr[0], FILE_APPEND);
-file_put_contents("test.txt",$arr[1], FILE_APPEND);
-
-
-dec(file("test.txt")[0],file("test2.txt")[0]);
-
-//print(getString(getBytes($string)));
+print_r($alot);
+print(getString($alot));
 
