@@ -63,20 +63,18 @@ function dec($txt,$k){
 
 	for($i=0;$i<$size;$i++){
 		$tmp = explode("-",$data[$i]);
-		print_r($tmp);
 		$key[$i] = $tmp[1];
 		$len[$i] = $tmp[0];	
 	}
 	for($i=0;$i<$size;$i++){
-		print($txt."\n");
 		$shuf[$i] = substr($txt,0,$len[$i]);
 		$txt = substr_replace($txt, "",0, $len[$i]);	
 	}
 	for($i=0;$i<$size;$i++){
 		$b[$i] = $shuf[$key[$i]];
 	}
-	print_r($shuf);
-	print(getString($b));
+	
+	return getString($b);
 }
 
 function enc($txt){
@@ -130,29 +128,3 @@ function decry($string,$alphabet){
 	}
 	return $byte;
 }
-function funnyThing(){
-	$alphabet = getAlphabet(readline("key:"));
-
-	$fun = array();
-
-	$bytes = getBytes("i need money or i will die x.x");
-
-	$i =0;
-
-	foreach($bytes as $tmp){
-		$fun[$i++] = encry($tmp,$alphabet);	
-	}
-	print_r($fun);
-
-	$alot = array();
-
-	$i=0;
-	foreach($fun as $tmp){
-		$alot[$i++] = decry($tmp,$alphabet);	
-	}
-
-	print_r($alot);
-	print(getString($alot));
-}
-
-funnyThing();
