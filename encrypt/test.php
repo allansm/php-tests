@@ -1,7 +1,5 @@
 <?php
 
-$string = "my  test";
-
 function getBytes($string){
 	$bytes = array();
 	$len = strlen($string);
@@ -132,27 +130,29 @@ function decry($string,$alphabet){
 	}
 	return $byte;
 }
+function funnyThing(){
+	$alphabet = getAlphabet(readline("key:"));
 
-$alphabet = getAlphabet("f:1;u:2;n:4;w:8;i:16;t:32;h:64;s:128");
+	$fun = array();
 
-$fun = array();
+	$bytes = getBytes("i need money or i will die x.x");
 
-$bytes = getBytes("i need money or i will die x.x");
+	$i =0;
 
-$i =0;
+	foreach($bytes as $tmp){
+		$fun[$i++] = encry($tmp,$alphabet);	
+	}
+	print_r($fun);
 
-foreach($bytes as $tmp){
-	$fun[$i++] = encry($tmp,$alphabet);	
+	$alot = array();
+
+	$i=0;
+	foreach($fun as $tmp){
+		$alot[$i++] = decry($tmp,$alphabet);	
+	}
+
+	print_r($alot);
+	print(getString($alot));
 }
-print_r($fun);
 
-$alot = array();
-
-$i=0;
-foreach($fun as $tmp){
-	$alot[$i++] = decry($tmp,$alphabet);	
-}
-
-print_r($alot);
-print(getString($alot));
-
+funnyThing();
