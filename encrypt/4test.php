@@ -14,7 +14,7 @@ function funnyThing(){
 	foreach($bytes as $tmp){
 		$fun[$i++] = encry($tmp,$alphabet);	
 	}
-	//print_r($fun);
+	
 	echo implode("-",$fun)."\n";
 
 	$alot = array();
@@ -24,7 +24,6 @@ function funnyThing(){
 		$alot[$i++] = decry($tmp,$alphabet);	
 	}
 
-	//print_r($alot);
 	print(getString($alot));
 }
 
@@ -34,7 +33,12 @@ function funnyThing2(){
 	print("dec:".dec($arr[1],$arr[0]));
 }
 
-funnyThing();
-print("\n\n");
-funnyThing2();
+function funnyThing3(){
+	$arr = array();
+	$arr[0] = usePattern(readline("to encrypt:"),readline("key:"),readline("delimiter:"));
+	$arr[1] = useKey($arr[0],readline("key:"),readline("delimiter:"));
 
+	print_r($arr);
+}
+
+funnyThing3();

@@ -128,3 +128,35 @@ function decry($string,$alphabet){
 	}
 	return $byte;
 }
+
+function usePattern($txt,$pattern,$delimiter){
+	$alphabet = getAlphabet($pattern);
+
+	$bytes = getBytes($txt);
+	
+	$temp = array();
+	
+	$i = 0;
+
+	foreach($bytes as $byte){
+		$temp[$i++] = encry($byte,$alphabet);	
+	}
+
+	return implode($delimiter,$temp);
+}
+
+function useKey($txt,$pattern,$delimiter){
+	$alphabet = getAlphabet($pattern);
+
+	$encry = explode($delimiter,$txt);
+
+	$bytes = array();
+
+	$i = 0;
+
+	foreach($encry as $enc){
+		$bytes[$i++] = decry($enc,$alphabet);
+	}
+
+	return getString($bytes);
+}
