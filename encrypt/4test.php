@@ -41,4 +41,40 @@ function funnyThing3(){
 	print_r($arr);
 }
 
-funnyThing3();
+function test(){
+	$file = file(readline("file to test:"));
+	$key = readline("key:");
+	$delimiter = readline("delimiter:");
+	
+	foreach($file as $line){
+		file_put_contents("enc.txt",usePattern($line,$key,$delimiter)."\n",FILE_APPEND);
+	}
+}
+function test2(){
+	$file = file(readline("file to test:"));
+	$key = readline("key:");
+	$delimiter = readline("delimiter");
+	
+	$txt = "";
+
+	foreach($file as $line){
+		#print_r(useKey($line,$key,$delimiter));
+		$alphabet = getAlphabet($key);
+		$encry = explode($delimiter,$line);
+
+		foreach($encry as $enc){
+			$txt.=chr(decry($enc,$alphabet));
+		}
+	}
+	file_put_contents("dec.txt",$txt,FILE_APPEND);
+}
+function test3(){
+		
+}
+$op = readline("0-1:");
+if($op == 0){
+	test();
+}else{
+	test2();
+}
+#funnyThing3();
