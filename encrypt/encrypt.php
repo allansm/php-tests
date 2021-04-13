@@ -145,7 +145,19 @@ function usePattern($txt,$pattern,$delimiter){
 	return implode($delimiter,$temp);
 }
 
-function useKey($txt,$pattern,$delimiter){
+function useKey($txt,$pattern,$delimiter){	
+	$return = "";
+
+	$alphabet = getAlphabet($pattern);
+	$encry = explode($delimiter,$txt);
+
+	foreach($encry as $enc){
+		$return.=chr(decry($enc,$alphabet));
+	}
+	return $return;
+}
+
+/*function useKey($txt,$pattern,$delimiter){
 	$alphabet = getAlphabet($pattern);
 
 	$encry = explode($delimiter,$txt);
@@ -159,4 +171,6 @@ function useKey($txt,$pattern,$delimiter){
 	}
 
 	return getString($bytes);
-}
+}*/
+
+

@@ -28,6 +28,7 @@ function storeDump($fn,$url){
 				print($i++.":".$arr[0]."\n\n");
 			}
 		}
+
 		else if(strtolower($command) == "show"){
 			$i = 0;
 			foreach($lines as $line){
@@ -40,6 +41,7 @@ function storeDump($fn,$url){
 			getPage($url);
 			return $url;
 		}
+
 		else if(strtolower($command) == "add"){
 			$add = readline("text to add:");
 			$op = readline("start or end(s/e)?");
@@ -99,6 +101,7 @@ function storeDump($fn,$url){
 				exec($tmp);
 			}
 		}
+
 		else if(!(strpos(strtolower($command)," : ") === false)){
 			unset($tmp);
 			$tmp = explode(" : ",$command);
@@ -110,6 +113,7 @@ function storeDump($fn,$url){
 				$i++;
 			}
 		}
+
 		else if(!(strpos(strtolower($command)," - ") === false)){
 			unset($tmp);
 			$tmp = explode(" - ",$command);
@@ -126,6 +130,7 @@ function storeDump($fn,$url){
 			unset($lines);
 			$lines = $new;
 		}
+
 		else if(strtolower($command) == "download"){
 			$dld = $lines[readline("line:")];
 			download($dld);
@@ -166,6 +171,7 @@ while(true){
 		$command = "storedump";
 		$redirect = false;
 	}
+
 	if(strtolower($command) == "seturl"){
 		$url =  readline("url:");
 	}
@@ -173,6 +179,7 @@ while(true){
 	else if(strtolower($command) == "getpage"){
 		getPage($url);
 	}
+
 	else if(strtolower($command) == "storedump"){
 		$url = isset($url)?$url:temp2;
 		$return = storeDump(temp2,$url);
@@ -184,6 +191,7 @@ while(true){
 			}
 		}
 	}
+
 	else if(strtolower($command) == "openpage"){
 		$url =  readline("url:");
 		getPage($url);
@@ -197,11 +205,16 @@ while(true){
 			}
 		}
 	}
+
 	else if(strtolower($command) == "open"){
 		$fn = readline("file path:");
 		storeDump($fn,$url);
 	}
-	
+
+	else if(strtolower($command) == "download"){
+		download(readline("url:"));
+	}
+		
 	else if(!(strpos(strtolower($command),"ls ") === false)){
 		unset($tmp);
 		$tmp = explode(" ",$command);
@@ -228,7 +241,9 @@ while(true){
 	else if(strtolower($command) == "exit"){
 		die("bye :D");
 	}
+
 	else if(strtolower($command) == "help"){
 		print(file_get_contents( "howto.txt" )."\n");
 	}
+
 }

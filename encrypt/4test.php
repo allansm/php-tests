@@ -69,12 +69,24 @@ function test2(){
 	file_put_contents("dec.txt",$txt,FILE_APPEND);
 }
 function test3(){
-		
+	$file = file(readline("file to test:"));
+	$key = readline("key:");
+	$delimiter = readline("delimiter");
+
+	//$alphabet = getAlphabet($key);
+
+	$txt = "";
+
+	foreach($file as $line){
+		$txt.= useKey($line,$key,$delimiter);
+	}
+	file_put_contents("dec.txt",$txt,FILE_APPEND);
+
 }
 $op = readline("0-1:");
 if($op == 0){
 	test();
 }else{
-	test2();
+	test3();
 }
 #funnyThing3();
