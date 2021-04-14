@@ -2,7 +2,7 @@
 
 include("encrypt.php");
 
-function lock(){
+function unlock(){
 	$file = file(readline("file:"));
 	$key = readline("key:");
 	$delimiter = readline("delimiter:");
@@ -20,4 +20,4 @@ function lock(){
 	}
 }
 
-lock();
+unlock();
