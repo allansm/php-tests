@@ -205,6 +205,21 @@ while(true){
 			}
 		}
 	}
+	else if(strtolower($command) == "search"){
+		$q = implode("+",explode(" ",readline("thing to search:")));
+		$url =  "http://www.bing.com/search?q=".$q;
+		getPage($url);
+		$url = isset($url)?$url:temp2;
+		$return = storeDump(temp2,$url);
+		while(true){
+			if($return != ""){
+				$return = storeDump(temp2,$return);
+			}else{
+				break;
+			}
+		}
+	}
+
 
 	else if(strtolower($command) == "open"){
 		$fn = readline("file path:");
