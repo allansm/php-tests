@@ -1,11 +1,12 @@
 <?php
 
 include("../functions/util.php");
+include("../functions/fileHandle.php");
 
-function createFile($fname){
+/*function createFile($fname){
 	fopen($fname, "w");
 	//fclose($fname);
-}
+}*/
 
 function copyLinks(){
 	if(file_exists("links.txt")){
@@ -25,7 +26,7 @@ function copyLinks(){
 	}
 }
 
-function consumeLine($fname,$index){
+/*function consumeLine($fname,$index){
 	$file = file($fname);
 
 	$ret = $file[$index];
@@ -39,7 +40,7 @@ function consumeLine($fname,$index){
 	}
 	
 	return $ret;
-}
+}*/
 
 function resolveLink($link){
 	$command = removeLineBreak(file(".config")[1])." \"".removeLineBreak($link)."\" > redirect.txt";
