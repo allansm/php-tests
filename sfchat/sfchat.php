@@ -21,9 +21,11 @@ function chat(){
 			$msg.="\n";
 			$encmsg = usePattern($msg,file("key.txt")[0],"-");
 			$url = removeLineBreak(file("url.txt")[0]).$encmsg;
+			//echo $url;
 			if(strlen($url) < 2048){
 				//file_get_contents($url);
 				$ht = get_remote_data($url);
+				echo $ht;
 			}else{
 				print("too long string\n");
 				echo strlen($msg)." characters\n";

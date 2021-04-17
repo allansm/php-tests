@@ -36,7 +36,8 @@ function run(){
 	$starttime = timeToMillis();
 
 	while(true){
-		echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
+		//echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
+		clean();
 		echo toSec(elapsed($starttime));
 
 		
