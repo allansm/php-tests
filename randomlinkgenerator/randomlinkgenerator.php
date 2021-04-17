@@ -2,11 +2,8 @@
 
 include("../functions/util.php");
 include("../functions/fileHandle.php");
+include("../functions/time.php");
 
-/*function createFile($fname){
-	fopen($fname, "w");
-	//fclose($fname);
-}*/
 
 function copyLinks(){
 	if(file_exists("links.txt")){
@@ -26,54 +23,43 @@ function copyLinks(){
 	}
 }
 
-/*function consumeLine($fname,$index){
-	$file = file($fname);
-
-	$ret = $file[$index];
-	
-	unset($file[$index]);
-	
-	unlink($fname);
-
-	foreach($file as $line){
-		file_put_contents($fname,$line,FILE_APPEND);
-	}
-	
-	return $ret;
-}*/
-
 function resolveLink($link){
 	$command = removeLineBreak(file(".config")[1])." \"".removeLineBreak($link)."\" > redirect.txt";
-
-	//$command.=" ".removeLineBreak($link)." > redirect.txt";
 
 	print($command."\n");
 
 	exec($command);
-	//die();
-	//exec("echo test > echo.txt");
 }
 
 
 function run(){
-	if(file_exists("links.txt")){
-		//try{
-			$link = consumeLine("links.txt",0);
-		//}catch(exception $ex){
-		//	copyLinks();
-		//	$link = consumeLine("links.txt",0);
-		//}
-		if($link == ""){
-			copyLinks();
+	$starttime = timeToMillis();
+
+	while(true){
+		echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
+		echo toSec(elapsed($starttime));
+
+		
+		if(file_exists("links.txt")){
+			
+			if(file("links.txt")[0] == ""){
+				copyLinks();
+			}else{
+				if( toSec( elapsed($starttime) ) == 900){
+					$starttime = timeToMillis();
+
+					consumeLine("redirect.txt",0);
+				}
+
+				$redirect = "";
+				$redirect = @file("redirect.txt")[0];
+				if($redirect == "")
+					resolveLink(consumeLine("links.txt",0));
+			}
 		}else{
-			$redirect = "";
-			$redirect = @file("redirect.txt")[0];
-			if($redirect == "")
-				resolveLink($link);
+			copyLinks();
 		}
-	}else{
-		copyLinks();
 	}
 }
-while(true)
-	run();
+
+run();
