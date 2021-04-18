@@ -33,8 +33,18 @@ function receiver(){
 
 	receiver();
 }
-if($argv[1] == "showChat"){
-	receiver();
-	die();
+function console($argv){
+	if($argv[1] == "showChat"){
+		receiver();
+		die();
+	}else if($argv[1] == "username"){
+		$username = readline("username:");
+		unlink("username.txt");
+		file_put_contents("username.txt",$username);
+		die();
+	}
+
+	sender($argv[1]);
 }
-sender($argv[1]);
+
+console($argv);

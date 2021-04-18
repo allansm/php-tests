@@ -25,7 +25,7 @@ function chat(){
 			if(strlen($url) < 2048){
 				//file_get_contents($url);
 				$ht = get_remote_data($url);
-				echo $ht;
+				//echo $ht;
 			}else{
 				print("too long string\n");
 				echo strlen($msg)." characters\n";
