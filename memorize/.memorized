@@ -1,0 +1,2 @@
+def removeBreakLine(string):
+def createFile(fname):
