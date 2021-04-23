@@ -2,6 +2,8 @@
 
 include("functions.php");
 include("functions2.php");
+include("import\\ttodua.php");
+	
 
 define("temp",sys_get_temp_dir()."\\phantom.txt");
 define("temp2",sys_get_temp_dir()."\\dump.txt");
@@ -24,6 +26,16 @@ function getPage($url){
 	}
 	
 	exec("phantomjs %temp%/phantom.txt");
+}
+
+function getPageTest($url){
+	$page = get_remote_data($url);
+		
+	if(file_exists(temp2)){
+		unlink(temp2);
+	}
+
+	file_put_contents(temp2,$page,FILE_APPEND);
 }
 
 function find($html,$p1,$p2){
