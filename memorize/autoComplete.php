@@ -1,4 +1,7 @@
 <?php
+
+include("../functions/util.php");
+
 $words = array();
 $words = $argv;
 
@@ -19,7 +22,5 @@ try{
 	}
 }catch(exception $e){}
 
-print($line);
-
-
+print(removeLineBreak($line));
 
