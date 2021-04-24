@@ -10,7 +10,7 @@ unset($words[0]);
 $line = implode(" ",$words);
 
 try{
-	$memorized = file(".memorized");
+	$memorized = file(__DIR__."/.memorized");
 	
 	foreach($memorized as $mem){
 		if(!(strpos($mem, $line) === false)){
