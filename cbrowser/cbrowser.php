@@ -2,6 +2,17 @@
 
 include("browserFunctions.php");
 
+$usePhantom = false;
+
+function pageSwitch($url,$usePhantom){
+	if($usePhantom){
+		print("using phantom..\n");
+		getPage($url);
+	}else{
+		getRemoteData($url);
+	}
+}
+
 function storeDump($fn,$url){
 	$dump = "";
 	$found = array();
@@ -38,7 +49,7 @@ function storeDump($fn,$url){
 		
 		else if(strtolower($command) == "redirect"){
 			$url = $lines[readline("line:")];
-			getPage($url);
+			pageSwitch($url,$usePhantom);
 			return $url;
 		}
 
@@ -167,7 +178,7 @@ while(true){
 	if(!$redirect){
 		$command = readline("cbrowser>");
 	}else{
-		getPage($url);
+		pageSwitch($url,$usePhantom);
 		$command = "storedump";
 		$redirect = false;
 	}
@@ -177,7 +188,7 @@ while(true){
 	}
 	
 	else if(strtolower($command) == "getpage"){
-		getPage($url);
+		pageSwitch($url,$usePhantom);
 	}
 
 	else if(strtolower($command) == "storedump"){
@@ -194,7 +205,7 @@ while(true){
 
 	else if(strtolower($command) == "openpage"){
 		$url =  readline("url:");
-		getPage($url);
+		pageSwitch($url,$usePhantom);
 		$url = isset($url)?$url:temp2;
 		$return = storeDump(temp2,$url);
 		while(true){
@@ -208,7 +219,7 @@ while(true){
 	else if(strtolower($command) == "search"){
 		$q = implode("+",explode(" ",readline("thing to search:")));
 		$url =  "http://www.bing.com/search?q=".$q;
-		getPage($url);
+		pageSwitch($url,$usePhantom);
 		$url = isset($url)?$url:temp2;
 		$return = storeDump(temp2,$url);
 		while(true){
@@ -259,6 +270,13 @@ while(true){
 
 	else if(strtolower($command) == "help"){
 		print(file_get_contents( "howto.txt" )."\n");
+	}
+
+	else if(strtolower($command) == "phantom"){
+		$usePhantom = ($usePhantom)?false:true;
+		echo "phantom:";
+		echo ($usePhantom)?"on":"off";
+		echo "\n";
 	}
 
 }

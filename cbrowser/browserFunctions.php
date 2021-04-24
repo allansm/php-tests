@@ -28,7 +28,7 @@ function getPage($url){
 	exec("phantomjs %temp%/phantom.txt");
 }
 
-function getPageTest($url){
+function getRemoteData($url){
 	$page = get_remote_data($url);
 		
 	if(file_exists(temp2)){
