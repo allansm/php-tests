@@ -18,7 +18,7 @@ while(true){
 	print("waiting:".$wait."\n");
 	print("timer:".$clock."\n");
 
-	if(intval($wait) <= toMinute(elapsed($start))){
+	if(floatval($wait) <= toMinute(elapsed($start))){
 		print("time reached.");
 		exec("ffplay -nodisp -autoexit -loglevel 0 1.wav");
 	}else{
