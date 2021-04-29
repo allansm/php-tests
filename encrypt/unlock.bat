@@ -1,2 +1,3 @@
 @echo off
-php "%~dp0unlock.php
+cd /d "%~dp0
+php unlock.php

@@ -1,3 +1,3 @@
 @echo off
 cd /d "%~dp0
-php lock.php
+php timer.php
