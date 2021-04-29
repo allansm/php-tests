@@ -5,6 +5,7 @@ include("../functions/util.php");
 
 
 $wait = readline("time in minute:");
+$title = readline("waiting to ");
 $start = timeToMillis();
 
 while(true){
@@ -14,7 +15,8 @@ while(true){
 	$minute = toMinute(elapsed($start)) - (60*$hour);
 	$sec = toSec(elapsed($start)) - (60*$minute);
 	$clock = $hour . ":" . $minute . ":" . $sec;
-	
+
+	print("waiting to ".$title."\n");
 	print("waiting:".$wait."\n");
 	print("timer:".$clock."\n");
 
