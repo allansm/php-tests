@@ -1,3 +1,4 @@
 .gitignore
 *.txt
 randomlinkgenerator/.config
+timer/data
