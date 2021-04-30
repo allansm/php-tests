@@ -24,7 +24,7 @@ while(true){
 
 	$hour = toHour(elapsed($start)+$elapsedBefore);
 	$minute = toMinute(elapsed($start)+$elapsedBefore) - (60*$hour);
-	$sec = toSec(elapsed($start)+$elapsedBefore) - (60*$minute);
+	$sec = toSec(elapsed($start)+$elapsedBefore) - ($hour*60*60+$minute*60);#(60*$minute);
 	$clock = $hour . ":" . $minute . ":" . $sec;
 
 	exec("echo ".(elapsed($start)+$elapsedBefore)." > ".$fn);
