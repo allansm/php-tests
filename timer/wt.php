@@ -4,6 +4,7 @@ include("../functions/time.php");
 include("../functions/util.php");
 include( "..\\functions\\fileHandle.php");
 
+$flag = true;
 
 $start = timeToMillis();
 $elapsedBefore = 0;
@@ -28,6 +29,11 @@ while(true){
 	$clock = $hour . ":" . $minute . ":" . $sec;
 
 	exec("echo ".(elapsed($start)+$elapsedBefore)." > ".$fn);
+	
+	if($flag){
+		$flag = false;
+		exec("echo ".$fn." ".$clock." >> "."data/.log");
+	}
 
 	echo $fn." ".$clock;
 	sleep(1);
