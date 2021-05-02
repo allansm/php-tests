@@ -26,8 +26,13 @@ function show($fname){
 }
 function console($argv){
 	global $SECOND,$MINUTE,$HOUR;
-
-	$fname = "data/".$argv[1];
+	
+	if(array_key_exists(1,$argv)){
+		$fname = "data/".$argv[1];
+	}else{
+		$date = getdate();
+		$fname = "data/".$date["mday"].$date["mon"].$date["year"];
+	}
 	
 	$op = readline("1: show elapsed 2: add time 3:subtract time :");
 	if($op == 1){
