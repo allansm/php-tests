@@ -13,7 +13,7 @@ while(true){
 
 	$hour = toHour(elapsed($start));
 	$minute = toMinute(elapsed($start)) - (60*$hour);
-	$sec = toSec(elapsed($start)) - (60*$minute);
+	$sec = toSec(elapsed($start)) - ($hour*60*60+$minute*60);//- (60*$minute);
 	$clock = $hour . ":" . $minute . ":" . $sec;
 
 	print("waiting to ".$title."\n");
