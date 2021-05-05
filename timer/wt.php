@@ -11,7 +11,11 @@ $elapsedBefore = 0;
 
 $date = getdate();
 if(isset($argv[1])){
-	$fn = "data/".$argv[1];
+	if($argv[1] == "@"){
+		$fn = "data/".$date["mday"].$date["mon"].$date["year"];
+	}else{
+		$fn = "data/".$argv[1];
+	}
 }else{
 	$fn = "data/".$date["mday"].$date["mon"].$date["year"];
 }

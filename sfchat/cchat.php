@@ -7,6 +7,8 @@ include("../functions/util.php");
 function sender($msg){
 	if($msg == "cls"){
 		get_remote_data(removeLineBreak(file("url.txt")[0]).$msg);
+	}else if($msg == "showOnce"){
+	
 	}else{
 		$msg = file("username.txt")[0].":".$msg;
 		$msg.="\n";
@@ -42,6 +44,15 @@ function console($argv){
 		unlink("username.txt");
 		file_put_contents("username.txt",$username);
 		die();
+	}else if($argv[1] == "showOnce"){
+		$chat = get_remote_data(removeLineBreak(file("msgloc.txt")[0]));
+		
+		$exp = explode("\n",$chat);
+		foreach($exp as $line){
+			$chat = useKey($line,file("key.txt")[0],"-");
+			print($chat."<br/>");
+		}
+
 	}
 
 	sender($argv[1]);
