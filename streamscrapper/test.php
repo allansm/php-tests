@@ -48,7 +48,7 @@ function showstreams($pn){
 		print($i++.":".$stream."\n");
 	}
 }
-function play($n,$pn){
+function play($n,$pn,$quality){
 	$line = file("data/patterns.txt")[$pn];
 	$exp = explode("^",$line);
 	$streams = getstreams(get_remote_data(removeLineBreak($exp[0])),removeLineBreak($exp[1]),removeLineBreak($exp[2]));
@@ -57,7 +57,7 @@ function play($n,$pn){
 		$room = $stream;
 		if($n == $i++){
 			while(true){
-				exec("youtube-dl -f \"bestvideo[height<=720]+bestaudio/best[height<=720]\" --get-url ".$room." > data/room");
+				exec("youtube-dl -f \"bestvideo[height<=$quality]+bestaudio/best[height<=$quality]\" --get-url ".$room." > data/room");
 				$url = file("data/room")[0];
 				print("watching:".$room."\n");
 				exec("echo ".$room." > data/.log");
@@ -69,9 +69,30 @@ function play($n,$pn){
 			}	
 		}
 	}
-
 }
+
+function playLink($link,$quality){
+	$room = $link;
+	while(true){
+		exec("youtube-dl -f \"bestvideo[height<=$quality]+bestaudio/best[height<=$quality]\" --get-url ".$room." > data/room");
+		$url = file("data/room")[0];
+		print("watching:".$room."\n");
+		exec("echo ".$room." > data/.log");
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
+		}else{
+			exec("ffplay -an -x 300 -y 170  -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
+		}
+	}	
+}
+
+
+if(array_key_exists(1,$argv)){
+	playLink($argv[1],readline("quality:"));
+	die();
+}
+
 avaible("data/patterns.txt");
 $pn = readline("n:");
 showstreams($pn);
-play(readline("n:"),$pn);
+play(readline("n:"),$pn,readline("quality:"));
