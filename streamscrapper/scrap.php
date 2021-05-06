@@ -60,7 +60,7 @@ function play($n,$pn,$quality,$screen){
 				exec("youtube-dl -f \"bestvideo[height<=$quality]+bestaudio/best[height<=$quality]\" --get-url ".$room." > data/room");
 				$url = file("data/room")[0];
 				print("watching:".$room."\n");
-				exec("echo ".$room." > data/.log");
+				exec("echo ".$room." >> data/.log");
 				if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 					if($screen == ""){
 						exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
@@ -82,7 +82,7 @@ function playLink($link,$quality,$screen){
 		exec("youtube-dl -f \"bestvideo[height<=$quality]+bestaudio/best[height<=$quality]\" --get-url ".$room." > data/room");
 		$url = file("data/room")[0];
 		print("watching:".$room."\n");
-		exec("echo ".$room." > data/.log");
+		exec("echo ".$room." >> data/.log");
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 			if($screen == ""){
 				exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
