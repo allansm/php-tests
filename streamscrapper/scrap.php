@@ -48,7 +48,7 @@ function showstreams($pn){
 		print($i++.":".$stream."\n");
 	}
 }
-function play($n,$pn,$quality){
+function play($n,$pn,$quality,$screen){
 	$line = file("data/patterns.txt")[$pn];
 	$exp = explode("^",$line);
 	$streams = getstreams(get_remote_data(removeLineBreak($exp[0])),removeLineBreak($exp[1]),removeLineBreak($exp[2]));
@@ -62,7 +62,12 @@ function play($n,$pn,$quality){
 				print("watching:".$room."\n");
 				exec("echo ".$room." > data/.log");
 				if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-					exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
+					if($screen == ""){
+						exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
+					}else{
+						$size = explode("x",$screen);
+						exec("ffplay -an -x ".$size[0]." -y ".$size[1]." -noborder -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);	
+					}
 				}else{
 					exec("ffplay -an -x 300 -y 170  -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
 				}
@@ -71,7 +76,7 @@ function play($n,$pn,$quality){
 	}
 }
 
-function playLink($link,$quality){
+function playLink($link,$quality,$screen){
 	$room = $link;
 	while(true){
 		exec("youtube-dl -f \"bestvideo[height<=$quality]+bestaudio/best[height<=$quality]\" --get-url ".$room." > data/room");
@@ -79,7 +84,12 @@ function playLink($link,$quality){
 		print("watching:".$room."\n");
 		exec("echo ".$room." > data/.log");
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
+			if($screen == ""){
+				exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
+			}else{
+				$size = explode("x",$screen);
+				exec("ffplay -an -x ".$size[0]." -y ".$size[1]." -noborder -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);	
+			}
 		}else{
 			exec("ffplay -an -x 300 -y 170  -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
 		}
@@ -88,11 +98,11 @@ function playLink($link,$quality){
 
 
 if(array_key_exists(1,$argv)){
-	playLink($argv[1],readline("quality:"));
+	playLink($argv[1],readline("quality:"),readline("screen size (HORIZONTALxVERTICAL or blank to miniature):"));
 	die();
 }
 
 avaible("data/patterns.txt");
 $pn = readline("n:");
 showstreams($pn);
-play(readline("n:"),$pn,readline("quality:"));
+play(readline("n:"),$pn,readline("quality:"),readline("screen size (HORIZONTALxVERTICAL or blank to miniature):"));
