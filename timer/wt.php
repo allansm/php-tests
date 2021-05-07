@@ -10,9 +10,13 @@ $start = timeToMillis();
 $elapsedBefore = 0;
 
 $date = getdate();
-if(isset($argv[1])){
+if(array_key_exists(1,$argv)){
 	if($argv[1] == "@"){
 		$fn = "data/".$date["mday"].$date["mon"].$date["year"];
+	}else if($argv[1] == "$"){
+		$data = array_diff(scandir("data"),array(".",".."));
+		print_r($data);
+		$fn = "data/".$data[readline("select one file by index:")];
 	}else{
 		$fn = "data/".$argv[1];
 	}
