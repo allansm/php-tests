@@ -17,6 +17,12 @@ if(array_key_exists(1,$argv)){
 		$data = array_diff(scandir("data"),array(".",".."));
 		print_r($data);
 		$fn = "data/".$data[readline("select one file by index:")];
+	}else if(str_starts_with($argv[1],"$")){
+		$ind = str_replace("$","",$argv[1]);
+		$ind = intval($ind);
+		
+		$data = array_diff(scandir("data"),array(".",".."));
+		$fn = "data/".$data[$ind];
 	}else{
 		$fn = "data/".$argv[1];
 	}
