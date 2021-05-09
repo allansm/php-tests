@@ -47,7 +47,11 @@ while(true){
 	
 	if($flag){
 		$flag = false;
-		exec("echo ".$fn." ".$clock." >> "."data/.log");
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			exec("echo ".$fn." ".$clock." %date% %time% >> "."data/.log");
+		}else{	
+			exec("echo ".$fn." ".$clock." >> "."data/.log");
+		}
 	}
 
 	echo $fn." ".$clock."\n";
@@ -60,13 +64,13 @@ while(true){
 
 		if($hour > $h){
 			print("time reached\n");
-			exec("ffplay -nodisp -autoexit -loglevel 0 1.wav");	
+			exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");	
 		}else if($h == $hour && $minute > $m){
 			print("time reached\n");
-			exec("ffplay -nodisp -autoexit -loglevel 0 1.wav");
+			exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");
 		}else if($h == $hour && $minute == $m && $sec > $s){
 			print("time reached\n");
-			exec("ffplay -nodisp -autoexit -loglevel 0 1.wav");
+			exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");
 		}
 	}
 
