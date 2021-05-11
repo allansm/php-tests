@@ -15,19 +15,28 @@ function find($html,$p1,$p2){
 	return $linkArray;
 }
 
-$url = readline("url:");
+$url = $argv[1];
 $screen = readline("screen size (HORIZONTALxVERTICAL or blank to miniature):");
 while(true){
+	$old = $url;
+	$url .= rand(1,11000);
+	print($url."\n");
 	$page = get_remote_data($url);
 
 	$filtered = find($page,"href=\"/video","\"");
+		
+	print_r($filtered);
 
 	$links = array();
+	
+	$parsedUrl = parse_url($url);
+	$root = strstr($url, $parsedUrl['path'], true);
 
 	foreach($filtered as $f){
-		array_push($links,$url."/video".$f[0]);
+		array_push($links,$root."/video".$f[0]);
 	}
-	for($i=0;$i<100;$i++){
+	print_r($links);
+	for($i=0;$i<rand(1,100);$i++){
 		shuffle($links);
 	}
 
@@ -38,12 +47,11 @@ while(true){
 	$links2 = array();
 
 	foreach($filtered2 as $f){
-		array_push($links2,$url."/dload".$f[0]);
+		array_push($links2,$root."/dload".$f[0]);
 	}
 
 	foreach($links2 as $l){
 		if(array_key_exists(0,find($l,"720",""))){
-			#exec("ffplay -an -x 300 -y 300 ".$l);
 			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 				if($screen == ""){
 					exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$l);
@@ -57,4 +65,5 @@ while(true){
 
 		}
 	}
+	$url = $old;
 }
