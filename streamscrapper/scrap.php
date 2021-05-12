@@ -2,6 +2,7 @@
 
 include("import/ttodua.php");
 include("../functions/util.php");
+include("../functions/ff.php");
 
 function find($html,$p1,$p2){
 	$p1 = str_replace("/", "\/", $p1);
@@ -61,16 +62,7 @@ function play($n,$pn,$quality,$screen){
 				$url = file("data/room")[0];
 				print("watching:".$room."\n");
 				exec("echo ".$room." >> data/.log");
-				if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-					if($screen == ""){
-						exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
-					}else{
-						$size = explode("x",$screen);
-						exec("ffplay -an -x ".$size[0]." -y ".$size[1]." -noborder -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);	
-					}
-				}else{
-					exec("ffplay -an -x 300 -y 170  -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
-				}
+				player($screen,$url);
 			}	
 		}
 	}
@@ -83,16 +75,7 @@ function playLink($link,$quality,$screen){
 		$url = file("data/room")[0];
 		print("watching:".$room."\n");
 		exec("echo ".$room." >> data/.log");
-		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			if($screen == ""){
-				exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
-			}else{
-				$size = explode("x",$screen);
-				exec("ffplay -an -x ".$size[0]." -y ".$size[1]." -noborder -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);	
-			}
-		}else{
-			exec("ffplay -an -x 300 -y 170  -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$url);
-		}
+		player($screen,$url);
 	}	
 }
 

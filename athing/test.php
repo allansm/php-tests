@@ -1,7 +1,7 @@
 <?php
 
 include("import\\ttodua.php");
-
+include("../functions/ff.php");
 function find($html,$p1,$p2){
 	$p1 = str_replace("/", "\/", $p1);
 	$p2 = str_replace("/", "\/", $p2);
@@ -52,17 +52,7 @@ while(true){
 
 	foreach($links2 as $l){
 		if(array_key_exists(0,find($l,"720",""))){
-			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-				if($screen == ""){
-					exec("ffplay -an -x 300 -y 170 -top 28 -left 1000 -noborder -alwaysontop -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$l);
-				}else{
-					$size = explode("x",$screen);
-					exec("ffplay -an -x ".$size[0]." -y ".$size[1]." -noborder -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$l);	
-				}
-			}else{
-				exec("ffplay -an -x 300 -y 170  -framedrop -autoexit -fflags nobuffer -loglevel 0 ".$l);
-			}
-
+			player($screen,$l);
 		}
 	}
 	$url = $old;
