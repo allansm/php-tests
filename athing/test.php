@@ -23,7 +23,7 @@ while(true){
 	print($url."\n");
 	$page = get_remote_data($url);
 
-	$filtered = find($page,"href=\"/video","\"");
+	$filtered = find($page,$argv[2],$argv[3]);
 		
 	print_r($filtered);
 
@@ -33,7 +33,7 @@ while(true){
 	$root = strstr($url, $parsedUrl['path'], true);
 
 	foreach($filtered as $f){
-		array_push($links,$root."/video".$f[0]);
+		array_push($links,$root.$argv[4].$f[0]);
 	}
 	print_r($links);
 	for($i=0;$i<rand(1,100);$i++){
@@ -42,12 +42,12 @@ while(true){
 
 	$page2 = get_remote_data($links[0]);
 
-	$filtered2 = find($page2,"href=\"/dload","\"");
+	$filtered2 = find($page2,$argv[5],$argv[6]);
 
 	$links2 = array();
 
 	foreach($filtered2 as $f){
-		array_push($links2,$root."/dload".$f[0]);
+		array_push($links2,$root.$argv[7].$f[0]);
 	}
 
 	foreach($links2 as $l){
