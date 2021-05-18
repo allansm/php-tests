@@ -28,6 +28,9 @@ while(true){
 
 	if(floatval($wait) <= toMinute(elapsed($start))){
 		print("time reached.");
+		
+		toast($title,"Timer","bin/notifu");	
+		
 		exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");
 	}else{
 		sleep(1);

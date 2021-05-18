@@ -17,3 +17,20 @@ function isOnline($file){
 	    return true;
 	}	
 }
+
+function isWindows(){
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		return true;
+	}else{	
+		return false;
+	}
+}
+
+#this require notifu on windows blank in other os
+function toast($message,$title,$exe){
+	if(isWindows()){
+		exec("start \"\" \"$exe\" /m \"\\ntime to $message\" /p \"$title\" /t none /i %SYSTEMROOT%\\system32\\imageres.dll,10 /q");
+	}else{
+		exec("notify-send \"$title\" \"$message\"");	
+	}
+}
