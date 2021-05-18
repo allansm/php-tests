@@ -27,7 +27,13 @@ foreach($lines as $line){
 	if(array_key_exists(0,$found) && array_key_exists(0,$found2)){
 		$contribution = find($line,"data-count=\"","\"")[0][0];
 		$date = find($line,"data-date=\"","\"")[0][0];
-		print($date.":".$contribution."\n");
+		if(array_key_exists(1,$argv)){
+			if($argv[1] == $date){
+				print($date.":".$contribution."\n");	
+			}
+		}else{
+			print($date.":".$contribution."\n");
+		}
 	}
 	unset($found);	
 }
