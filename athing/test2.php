@@ -4,10 +4,6 @@ include("import\\ttodua.php");
 include("../functions/ff.php");
 include("../functions/util.php");
 
-$start = get_remote_data($argv[1]);
-
-$lines = explode("\n",$start);
-
 function filter($txt,$pattern){
 	$pattern = explode(";",$pattern);
 	
@@ -20,6 +16,12 @@ function filter($txt,$pattern){
 	}
 	return ($i == $size)?true:false;
 }
+
+
+$start = get_remote_data($argv[1]);
+
+$lines = explode("\n",$start);
+
 
 $links = array();
 foreach($lines as $line){
@@ -48,8 +50,18 @@ $lines3 = explode("\n",$third);
 
 print_r($lines3);
 
+$forth = "";
 foreach($lines3 as $line){
 	if(filter($line,$argv[4])){
-		echo $line;
+		$forth = get_remote_data(find($line,"href=\"","\""));
 	}
 }
+$lines4 = explode("\n",$forth);
+foreach($lines4 as $line){
+	if(filter($line,$argv[5])){
+		$mp4 = find($line,"href=\"","\"");
+		print($mp4);
+		player("",$mp4);
+	}
+}
+
