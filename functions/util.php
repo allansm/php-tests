@@ -34,3 +34,18 @@ function toast($message,$title,$exe){
 		exec("notify-send \"$title\" \"$message\"");	
 	}
 }
+
+function has($txt,$keyword){
+	if(strpos($txt, $keyword) !== false){
+		return true;
+     	} else{
+        	return false;
+	}
+}
+
+function find($str,$start,$end){
+	if (preg_match("/$start(.*?)$end/", $str, $match) == 1) {
+	    return $match[1];
+	}
+	return "";
+}
