@@ -18,7 +18,11 @@ function filter($txt,$pattern){
 }
 
 while(true){
-	$start = get_remote_data($argv[1]);
+	$arg = (has($argv[1],"???")) ? str_replace("???",rand(1,158),$argv[1]) : $argv[1];
+	
+	print($arg."\n");
+		
+	$start = get_remote_data($arg);
 
 	$lines = explode("\n",$start);
 
@@ -30,10 +34,10 @@ while(true){
 		}
 	}
 
-	print_r($links);
-
 	shuffle($links);
-
+	
+	print($links[0]."\n");
+	
 	$second = get_remote_data($links[0]);
 
 	$lines2 = explode("\n",$second);
@@ -42,17 +46,17 @@ while(true){
 	$third = "";
 	foreach($lines2 as $line){
 		if(filter($line,$argv[3])){
+			print($line."\n");
 			$third = get_remote_data(find($line,"href=\"","\""));
 		}
 	}
 
 	$lines3 = explode("\n",$third);
 
-	print_r($lines3);
-
 	$forth = "";
 	foreach($lines3 as $line){
 		if(filter($line,$argv[4])){
+			print($line."\n");
 			$forth = get_remote_data(find($line,"href=\"","\""));
 		}
 	}
@@ -60,7 +64,7 @@ while(true){
 	foreach($lines4 as $line){
 		if(filter($line,$argv[5])){
 			$mp4 = find($line,"href=\"","\"");
-			print($mp4);
+			print($mp4."\n");
 			player("",$mp4);
 		}
 	}
