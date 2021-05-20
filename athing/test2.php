@@ -18,7 +18,10 @@ function filter($txt,$pattern){
 }
 
 while(true){
-	$arg = (has($argv[1],"???")) ? str_replace("???",rand(1,158),$argv[1]) : $argv[1];
+	$limit = (has($argv[1],"###")) ? find($argv[1],"###","###"):158;
+	$arg = (has($argv[1],"???")) ? str_replace("???",rand(1,$limit),$argv[1]) : $argv[1];
+
+	$arg = (has($arg,"###"))?str_replace("###".$limit."###","",$arg):$arg;
 	
 	print($arg."\n");
 		
