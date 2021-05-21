@@ -68,7 +68,8 @@ while(true){
 		if(filter($line,$argv[5])){
 			$mp4 = find($line,"href=\"","\"");
 			print($mp4."\n");
-			player("",$mp4);
+			//player("",$mp4);
+			exec("vlc $mp4 vlc://quit");
 		}
 	}
 }
