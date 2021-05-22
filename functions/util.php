@@ -49,3 +49,7 @@ function find($str,$start,$end){
 	}
 	return "";
 }
+
+function getLines($txt){
+	return $lines = explode("\n",$txt);
+}
