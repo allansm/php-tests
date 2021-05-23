@@ -14,6 +14,8 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 }
 $start = timeToMillis();
 
+$once = true;
+
 while(true){
 	clean();
 
@@ -28,8 +30,11 @@ while(true){
 
 	if(floatval($wait) <= toMinute(elapsed($start))){
 		print("time reached.");
-		
-		toast($title,"Timer","bin/notifu");	
+
+		if($once){
+			$once = false;
+			toast($title,"Timer","bin/notifu");
+		}
 		
 		exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");
 	}else{
