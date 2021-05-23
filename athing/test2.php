@@ -68,8 +68,12 @@ while(true){
 		if(filter($line,$argv[5])){
 			$mp4 = find($line,"href=\"","\"");
 			print($mp4."\n");
-			player("",$mp4);
-			//exec("vlc --qt-minimal-view --video-x 1000 --video-y 28 --width 300 --height 170 $mp4 vlc://quit");
+			if(array_key_exists(6,$argv)){
+				$screen = $argv[6];	
+			}else{
+				$screen = "";
+			}
+			player($screen,$mp4);
 		}
 	}
 }
