@@ -69,7 +69,7 @@ while(true){
 			$mp4 = find($line,"href=\"","\"");
 			print($mp4."\n");
 			player("",$mp4);
-			//exec("vlc $mp4 vlc://quit");
+			//exec("vlc --qt-minimal-view --video-x 1000 --video-y 28 --width 300 --height 170 $mp4 vlc://quit");
 		}
 	}
 }
