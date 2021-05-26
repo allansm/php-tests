@@ -5,11 +5,11 @@ class Player{
 	private $current = "ffplay";
 	private $avaible = ["ffplay","mpv"];
 	
-	public setPlayer($playerName){
+	public function setPlayer($playerName){
 		$this->current = $playerName;
 	}
 		
-	public play($screen,$mp4){
+	public function play($screen,$mp4){
 		if($current == "ffplay"){
 			player($screen,$mp4);
 		}else if($current == "mpv"){
@@ -19,10 +19,4 @@ class Player{
 }
 
 
-//testing
 
-$player = new Player();
-
-player.setPlayer("mpv");
-
-player.play("");
