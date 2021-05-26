@@ -68,17 +68,16 @@ while(true){
 	foreach($lines4 as $line){
 		if(filter($line,$argv[5])){
 			$mp4 = find($line,"href=\"","\"");
+			
 			print("\n");
 			print($mp4."\n");
+			
 			if(array_key_exists(6,$argv)){
 				$screen = $argv[6];	
 			}else{
 				$screen = "";
 			}
-			//player($screen,$mp4); 
 			
-			//test
-			//exec("mpv --mute --ontop --no-border --geometry=300x170+1000+28 --really-quiet  ".$mp4);
 			mpv($screen,$mp4);
 		}
 	}
