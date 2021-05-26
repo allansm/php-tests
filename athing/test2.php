@@ -6,6 +6,7 @@ include("../functions/util.php");
 include("../functions/mpv.php");
 
 function filter($txt,$pattern){
+	/*
 	$pattern = explode(";",$pattern);
 	
 	$size = sizeof($pattern);
@@ -16,6 +17,9 @@ function filter($txt,$pattern){
 		}
 	}
 	return ($i == $size)?true:false;
+	*/
+
+	return hasPattern($txt,$pattern);
 }
 
 while(true){

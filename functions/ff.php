@@ -1,6 +1,6 @@
 <?php
 
-function player($screen,$mp4){
+function ffplay($screen,$mp4){
 	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 		if($screen == ""){
 			//-probesize 32 -sync ext -fflags nobuffer 

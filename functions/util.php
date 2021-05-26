@@ -53,3 +53,17 @@ function find($str,$start,$end){
 function getLines($txt){
 	return $lines = explode("\n",$txt);
 }
+
+function hasPattern($txt,$pattern){
+	$pattern = explode(";",$pattern);
+	
+	$size = sizeof($pattern);
+	$i = 0;
+	foreach($pattern as $p){
+		if(has($txt,$p)){
+			$i++;
+		}
+	}
+	return ($i == $size)?true:false;
+}
+
