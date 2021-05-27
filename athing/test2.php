@@ -5,20 +5,7 @@ include("../functions/ff.php");
 include("../functions/util.php");
 include("../functions/mpv.php");
 
-function filter($txt,$pattern){
-	/*
-	$pattern = explode(";",$pattern);
-	
-	$size = sizeof($pattern);
-	$i = 0;
-	foreach($pattern as $p){
-		if(has($txt,$p)){
-			$i++;
-		}
-	}
-	return ($i == $size)?true:false;
-	*/
-
+function filter($txt,$pattern){	
 	return hasPattern($txt,$pattern);
 }
 
