@@ -2,7 +2,6 @@
 
 function createFile($fname){
 	fopen($fname, "w");
-	//fclose($fname);
 }
 
 function consumeLine($fname,$index){
@@ -21,4 +20,12 @@ function consumeLine($fname,$index){
 	return $ret;
 }
 
+function createFolder($folder){
+	if(!file_exists($folder)){
+		mkdir($folder);
+	}
+}
 
+function getTemp(){
+	return sys_get_temp_dir();
+}

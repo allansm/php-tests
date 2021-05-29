@@ -50,6 +50,13 @@ function find($str,$start,$end){
 	return "";
 }
 
+function findAll($str,$start,$end){
+	if (preg_match("/$start(.*?)$end/", $str, $match) == 1) {
+	    return $match;
+	}
+	return "";
+}
+
 function getLines($txt){
 	return $lines = explode("\n",$txt);
 }
