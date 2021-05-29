@@ -27,16 +27,9 @@ print($page."\n");
 
 $lines = getLines($page);
 
-//print_r($lines);
 
 chdir(sys_get_temp_dir());
-/*
-if(!file_exists("getsource")){
-	mkdir("getsource");
-}else{
-	//print("folder exists.");
-}
- */
+
 createFolder("getsource");
 chdir("getsource");
 
