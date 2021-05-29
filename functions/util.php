@@ -74,3 +74,18 @@ function hasPattern($txt,$pattern){
 	return ($i == $size)?true:false;
 }
 
+
+function download($url,$folder){
+	$file_name = basename($url);
+	
+	$file_name = $folder.$file_name;
+
+	if(file_put_contents( $file_name,file_get_contents($url))) {
+		echo "File downloaded successfully\n";
+	}
+	/*
+	else {
+		echo "File downloading failed.\n";
+	}
+	 */         
+}

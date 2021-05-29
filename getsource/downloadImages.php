@@ -3,7 +3,9 @@
 include("import/ttodua.php");
 include("../functions/util.php");
 include("../functions/fileHandle.php");
+include("getsourceFunctions.php");
 
+/*
 function download($url,$folder){
 	$file_name = basename($url);
 	
@@ -17,6 +19,7 @@ function download($url,$folder){
 	}
 	           
 }
+ */
 
 $page = get_remote_data($argv[1]);
 $page = str_replace("<","\n",$page);
@@ -27,11 +30,13 @@ print($page."\n");
 
 $lines = getLines($page);
 
-
+/*
 chdir(sys_get_temp_dir());
 
 createFolder("getsource");
 chdir("getsource");
+ */
+toGetSource();
 
 foreach($lines as $line){
 	if(hasPattern($line,"http;src=;.jpg") || hasPattern($line,"http;src=;.png") || hasPattern($line,"http;src=;.gif")){
