@@ -3,7 +3,7 @@
 include("import/ttodua.php");
 include("../functions/util.php");
 include("../functions/fileHandle.php");
-include("getsourceFunctions.php");
+include("getsource.php");
 
 
 $page = get_remote_data($argv[1]);
