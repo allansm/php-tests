@@ -1,4 +1,7 @@
 <?php
+include("import/ttodua.php");
+include("../functions/util.php");
+include("../functions/fileHandle.php");
 
 function toGetSource(){
 	chdir(sys_get_temp_dir());
@@ -6,8 +9,8 @@ function toGetSource(){
 	chdir("getsource");
 }
 
-function getHttp($page){
-	//$page = get_remote_data($argv[1]);
+function getHttp($request){
+	$page = get_remote_data($request);
 	$page = str_replace("'","\"",$page);
 	$page = str_replace("\"","\n\n",$page);
 
@@ -24,7 +27,8 @@ function getHttp($page){
 }
 
 
-function getImageLinks(){
+function getImageLinks($request){
+	$page = get_remote_data($request);
 	$page = str_replace("<","\n",$page);
 	$page = str_replace(">","\n",$page);
 	$page = str_replace("'","\"",$page);
@@ -36,13 +40,15 @@ function getImageLinks(){
 	//toGetSource();
 
 
-
+	$images = array();
 	foreach($lines as $line){
+		//print($line);
 		if(hasPattern($line,"http;src=;.jpg") || hasPattern($line,"http;src=;.png") || hasPattern($line,"http;src=;.gif")){		
 			$url = find($line,"src=\"","\"");
 			if(has($url,".jpg") || has($url,".png") || has($url,".git")){
 				//print("$url\n\n");
 				//download($url,"");
+				array_push($images,$url);
 			}
 		}
 		if(hasPattern($line,"http;data-src=;.jpg") || hasPattern($line,"http;data-src=;.png") || hasPattern($line,"http;data-src=;.gif")){
@@ -50,16 +56,21 @@ function getImageLinks(){
 			if(has($url,".jpg") || has($url,".png") || has($url,".git")){
 				//print("$url\n\n");
 				//download($url,"");
+				array_push($images,$url);
 			}
 		}
 		if(hasPattern($line,"src=;.jpg") || hasPattern($line,"src=;.png") || hasPattern($line,"src=;.gif")){
 			if(!has($line,"http")){
 				$url = find($line,"src=\"","\"");
-				$url = $argv[1].$url;
+				$url = $request.$url;
 
 				//print("$url\n\n");
 				//download($url,"");
+				array_push($images,$url);
 			}
 		}
 	}
+	//print_r($images);
+	return $images;
+
 }

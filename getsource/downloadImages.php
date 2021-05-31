@@ -1,11 +1,11 @@
 <?php
 
-include("import/ttodua.php");
-include("../functions/util.php");
-include("../functions/fileHandle.php");
+//include("import/ttodua.php");
+//include("../functions/util.php");
+//include("../functions/fileHandle.php");
 include("getsource.php");
 
-
+/*
 $page = get_remote_data($argv[1]);
 $page = str_replace("<","\n",$page);
 $page = str_replace(">","\n",$page);
@@ -14,9 +14,15 @@ $page = str_replace("'","\"",$page);
 print($page."\n");
 
 $lines = getLines($page);
-
+ */
 toGetSource();
 
+foreach(getImageLinks($argv[1]) as $image){
+	print($image."\n");
+	download($image,"");
+}
+
+/*
 foreach($lines as $line){
 	if(hasPattern($line,"http;src=;.jpg") || hasPattern($line,"http;src=;.png") || hasPattern($line,"http;src=;.gif")){		
 		$url = find($line,"src=\"","\"");
@@ -41,4 +47,4 @@ foreach($lines as $line){
 			download($url,"");
 		}
 	}
-}	
+}*/	
