@@ -82,10 +82,5 @@ function download($url,$folder){
 
 	if(file_put_contents( $file_name,file_get_contents($url))) {
 		echo "File downloaded successfully\n";
-	}
-	/*
-	else {
-		echo "File downloading failed.\n";
-	}
-	 */         
+	}        
 }

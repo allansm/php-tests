@@ -6,5 +6,4 @@ toGetSource();
 
 foreach(getImageLinks($argv[1]) as $image){
 	print($image."\n");
-	download($image,"");
 }

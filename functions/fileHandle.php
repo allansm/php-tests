@@ -29,3 +29,9 @@ function createFolder($folder){
 function getTemp(){
 	return sys_get_temp_dir();
 }
+
+function tempWdir($folder){
+	chdir(sys_get_temp_dir());
+	createFolder($folder);
+	chdir($folder);
+}

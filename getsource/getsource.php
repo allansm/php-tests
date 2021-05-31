@@ -4,9 +4,12 @@ include("../functions/util.php");
 include("../functions/fileHandle.php");
 
 function toGetSource(){
+	/*
 	chdir(sys_get_temp_dir());
 	createFolder("getsource");
 	chdir("getsource");
+	 */
+	tempWdir("getsource");
 }
 
 function getHttp($request){
@@ -33,29 +36,21 @@ function getImageLinks($request){
 	$page = str_replace(">","\n",$page);
 	$page = str_replace("'","\"",$page);
 
-	//print($page."\n");
-
-	$lines = getLines($page);
-
-	//toGetSource();
-
+	$lines = getLines($page);	
 
 	$images = array();
 	foreach($lines as $line){
-		//print($line);
 		if(hasPattern($line,"http;src=;.jpg") || hasPattern($line,"http;src=;.png") || hasPattern($line,"http;src=;.gif")){		
 			$url = find($line,"src=\"","\"");
 			if(has($url,".jpg") || has($url,".png") || has($url,".git")){
-				//print("$url\n\n");
-				//download($url,"");
+				
 				array_push($images,$url);
 			}
 		}
 		if(hasPattern($line,"http;data-src=;.jpg") || hasPattern($line,"http;data-src=;.png") || hasPattern($line,"http;data-src=;.gif")){
 			$url = find($line,"data-src=\"","\"");
 			if(has($url,".jpg") || has($url,".png") || has($url,".git")){
-				//print("$url\n\n");
-				//download($url,"");
+				
 				array_push($images,$url);
 			}
 		}
@@ -64,13 +59,10 @@ function getImageLinks($request){
 				$url = find($line,"src=\"","\"");
 				$url = $request.$url;
 
-				//print("$url\n\n");
-				//download($url,"");
 				array_push($images,$url);
 			}
 		}
 	}
-	//print_r($images);
 	return $images;
 
 }
