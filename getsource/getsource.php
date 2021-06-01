@@ -4,11 +4,6 @@ include("../functions/util.php");
 include("../functions/fileHandle.php");
 
 function toGetSource(){
-	/*
-	chdir(sys_get_temp_dir());
-	createFolder("getsource");
-	chdir("getsource");
-	 */
 	tempWdir("getsource");
 }
 
