@@ -13,7 +13,6 @@ $arr = explode("/",$argv[1]);
 $http = has($argv[1],"https")?"https://":"http://";
 
 $site = $http.$arr[2];
-//die($site);
 
 $lines = array_unique(explode("\n\n",$page));
 
@@ -25,7 +24,6 @@ foreach($lines as $line){
 				if(has($line,"amp;")){
 					$line = str_replace("amp;","",$line);
 				}
-				//download("$site$line","");
 				foreach(getImageLinks("$site$line") as $image){
 					download($image,"");	
 				}
@@ -34,7 +32,6 @@ foreach($lines as $line){
 				if(has($line,"amp;")){
 					$line = str_replace("amp;","",$line);
 				}
-				//download("$site/$line","");
 				foreach(getImageLinks("$site/$line") as $image){
 					download($image,"");	
 				}
@@ -45,7 +42,4 @@ foreach($lines as $line){
 			download($line,"");
 		}
 	}
-	/*foreach(getImageLinks($link) as $image){
-		download($image,"");	
-	}*/
 }
