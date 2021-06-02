@@ -15,27 +15,35 @@ $http = has($argv[1],"https")?"https://":"http://";
 $site = $http.$arr[2];
 //die($site);
 
-$lines = explode("\n\n",$page);
+$lines = array_unique(explode("\n\n",$page));
 
 foreach($lines as $line){
 	if(!has($line,"<") && !has($line,">") && !has($line,",") && !has($line,"(") && !has($line,"http")){
 		if(has($line,"/") || has($line,"?")){
 			if(str_starts_with($line,"/")){
 				print("$site$line\n");
+				if(has($line,"amp;")){
+					$line = str_replace("amp;","",$line);
+				}
 				//download("$site$line","");
-				//foreach(getImageLinks("$site$line") as $image){
-					//download($image,"");	
-				//}
+				foreach(getImageLinks("$site$line") as $image){
+					download($image,"");	
+				}
 			}else{
 				print("$site/$line\n");
+				if(has($line,"amp;")){
+					$line = str_replace("amp;","",$line);
+				}
 				//download("$site/$line","");
-				//foreach(getImageLinks("$site/$line") as $image){
-					//download($image,"");	
-				//}
+				foreach(getImageLinks("$site/$line") as $image){
+					download($image,"");	
+				}
 			}
 		}
 	}else if(str_starts_with($line,"http")){
-		//download($line,"");
+		if(has($line,".png") || has($line,".jpg") || has($line,".gif")){
+			download($line,"");
+		}
 	}
 	/*foreach(getImageLinks($link) as $image){
 		download($image,"");	
