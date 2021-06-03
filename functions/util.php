@@ -29,7 +29,9 @@ function isWindows(){
 #this require notifu on windows blank in other os
 function toast($message,$title,$exe){
 	if(isWindows()){
-		exec("start \"\" \"$exe\" /m \"\\ntime to $message\" /p \"$title\" /t none /i %SYSTEMROOT%\\system32\\imageres.dll,10 /q");
+		exec("@echo off");
+		exec("taskkill /f /im notifu.exe 2>NUL");
+		exec("start \"\" \"$exe\" /m \"\\n$message\" /p \"$title\" /t none /i %SYSTEMROOT%\\system32\\imageres.dll,10 /q");
 	}else{
 		exec("notify-send \"$title\" \"$message\"");	
 	}

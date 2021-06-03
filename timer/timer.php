@@ -33,7 +33,7 @@ while(true){
 
 		if($once){
 			$once = false;
-			toast($title,"Timer","bin/notifu");
+			toast("time to $title","Timer","bin/notifu");
 		}
 		
 		exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");
