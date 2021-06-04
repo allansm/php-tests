@@ -2,9 +2,10 @@
 
 include("import/ttodua.php");
 include("../functions/util.php");
-include("../functions/ff.php");
+#include("../functions/ff.php");
+include("../functions/mpv.php");
 
-function find($html,$p1,$p2){
+function fnd($html,$p1,$p2){
 	$p1 = str_replace("/", "\/", $p1);
 	$p2 = str_replace("/", "\/", $p2);
 	
@@ -18,15 +19,15 @@ function find($html,$p1,$p2){
 }
 
 function getstreams($html,$site,$keyword){
-	$arr = find($html,"<a","</a>");
+	$arr = fnd($html,"<a","</a>");
 	$n = 1;
 	$i = 0;
 	$streams = array();
 	foreach($arr as $link){
-		$found = find($link[0],$keyword,"");
+		$found = fnd($link[0],$keyword,"");
 		
 		if(array_key_exists(0,$found)){
-			$room = find($link[0],"href=\"","\"")[0][0];
+			$room = fnd($link[0],"href=\"","\"")[0][0];
 			$room = $site.$room;
 			$streams[$i++] = $room;	
 		}
@@ -75,7 +76,7 @@ function playLink($link,$quality,$screen){
 		$url = file("data/room")[0];
 		print("watching:".$room."\n");
 		exec("echo ".$room." >> data/.log");
-		player($screen,$url);
+		mpv($screen,$url);
 	}	
 }
 

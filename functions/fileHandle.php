@@ -35,3 +35,9 @@ function tempWdir($folder){
 	createFolder($folder);
 	chdir($folder);
 }
+
+function deleteFile($fname){
+	if(file_exists($fname)){
+		unlink($fname);
+	}
+}
