@@ -17,6 +17,8 @@ if(array_key_exists(1,$argv)){
 		$data = array_diff(scandir("data"),array(".",".."));
 		print_r($data);
 		$fn = "data/".$data[readline("select one file by index:")];
+	}else if($argv[1] == "@@"){
+		die($date["mday"].$date["mon"].$date["year"]);
 	}else if(str_starts_with($argv[1],"$$")){
 		$data = array_diff(scandir("data"),array(".",".."));
 		print_r($data);
