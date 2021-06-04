@@ -2,10 +2,12 @@
 
 include("../functions/time.php");
 include("../functions/util.php");
-
+include("../functions/fileHandle.php");
 
 $wait = readline("time in minute:");
 $title = readline("waiting to ");
+
+createFolder("data");
 
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 	exec("echo waiting to $title waittime:$wait time:%date% %time% >> data/.log");	

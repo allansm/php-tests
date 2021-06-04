@@ -38,6 +38,8 @@ if(file_exists($fn)){
 	$elapsedBefore = intval(file($fn)[0]);
 }
 
+createFolder("data");
+
 while(true){
 	clean();
 
