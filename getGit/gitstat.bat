@@ -1,3 +1,3 @@
 @echo off
 cd /d "%~dp0
-php contribution.php %1
+php contribution.php allansm %1

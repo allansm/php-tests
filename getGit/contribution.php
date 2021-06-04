@@ -3,7 +3,9 @@
 include("import/ttodua.php");
 include("../functions/util.php");
 
-$data = get_remote_data("https://github.com/users/allansm/contributions");
+$user = $argv[1];
+
+$data = get_remote_data("https://github.com/users/$user/contributions");
 
 $lines = getLines($data);
 $higher = 0;
@@ -18,8 +20,8 @@ foreach($lines as $line){
 			$higher = $contribuition;
 		}
 
-		if(array_key_exists(1,$argv)){
-			if($argv[1] == $date){
+		if(array_key_exists(2,$argv)){
+			if($argv[2] == $date){
 				print("$date:$contribuition\n");
 			}
 		}else{
@@ -28,8 +30,8 @@ foreach($lines as $line){
 	}
 }
 
-if(array_key_exists(1,$argv)){
-	if($argv[1] == "$"){
+if(array_key_exists(2,$argv)){
+	if($argv[2] == "$"){
 		print("higher $hdate:$higher\n");
 	}
 }
