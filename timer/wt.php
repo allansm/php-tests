@@ -72,13 +72,19 @@ while(true){
 
 		if($hour > $h){
 			print("time reached\n");
-			exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");	
+			toast("time reached","Timer","bin/notifu");
+			exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");
+			die();	
 		}else if($h == $hour && $minute > $m){
 			print("time reached\n");
+			toast("time reached","Timer","bin/notifu");
 			exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");
+			die();
 		}else if($h == $hour && $minute == $m && $sec > $s){
 			print("time reached\n");
+			toast("time reached","Timer","bin/notifu");
 			exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");
+			die();
 		}
 	}
 
