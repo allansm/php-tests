@@ -17,13 +17,6 @@ function persist($msg){
 	}
 }
 
-/*
-if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-	exec("echo waiting to $title waittime:$wait time:%date% %time% >> data/.log");	
-}else{
-	exec("echo waiting to $title time:$wait >> data/.log");
-}
- */
 
 persist("waiting to $title waittime:$wait");
 
