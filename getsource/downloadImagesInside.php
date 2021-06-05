@@ -2,11 +2,12 @@
 
 include("getsource.php");
 
+/*
 function remoteSize($url) {
 	$headers = get_headers($url, 1);
 	$filesize = $headers['Content-Length'];
 	return $filesize;
-}
+}*/
 
 
 toGetSource();
@@ -17,7 +18,7 @@ $page = str_replace("\"","\n\n",$page);
 
 $arr = explode("/",$argv[1]);
 
-$http = has($argv[1],"https")?"https:":"http:";
+$http = has($argv[1],"https")?"https://":"http://";
 
 $site = $http.$arr[2];
 
@@ -27,22 +28,22 @@ foreach($lines as $line){
 	if(!has($line,"<") && !has($line,">") && !has($line,",") && !has($line,"(") && !has($line,"http") && !has($line,"==") && !has($line,"javascript") && !has($line,":")){
 		if(has($line,"/") || has($line,"?")){
 			if(str_starts_with($line,"/")){
-				print("$site$line\n");
 				if(has($line,"amp;")){
 					$line = str_replace("amp;","",$line);
 				}
+				print("$site$line\n");
 				foreach(getImageLinks("$site$line") as $image){
-					if(remoteSize($image) > 15000){
+					if(remoteSize($image) > 50000){
 						download($image,"");	
 					}
 				}
 			}else{
-				print("$site/$line\n");
 				if(has($line,"amp;")){
 					$line = str_replace("amp;","",$line);
 				}
+				print("$site/$line\n");
 				foreach(getImageLinks("$site/$line") as $image){
-					if(remoteSize($image) > 15000){
+					if(remoteSize($image) > 50000){
 						download($image,"");
 					}
 				}
@@ -53,9 +54,11 @@ foreach($lines as $line){
 			if(has($line,"amp;")){
 				$line = str_replace("amp;","",$line);
 			}
-			if(remoteSize($line) > 15000){
+			if(remoteSize($line) > 50000){
 				download($line,"");
 			}
 		}
+	}else{
+		//print("ignored : $line\n");
 	}
 }

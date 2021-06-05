@@ -86,3 +86,10 @@ function download($url,$folder){
 		echo "File downloaded successfully\n";
 	}        
 }
+
+function remoteSize($url) {
+	$headers = get_headers($url, 1);
+	$filesize = $headers['Content-Length'];
+	return $filesize;
+}
+
