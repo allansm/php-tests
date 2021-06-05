@@ -2,13 +2,6 @@
 
 include("getsource.php");
 
-/*
-function remoteSize($url) {
-	$headers = get_headers($url, 1);
-	$filesize = $headers['Content-Length'];
-	return $filesize;
-}*/
-
 
 toGetSource();
 
@@ -58,7 +51,5 @@ foreach($lines as $line){
 				download($line,"");
 			}
 		}
-	}else{
-		//print("ignored : $line\n");
 	}
 }
