@@ -61,3 +61,18 @@ function getImageLinks($request){
 	return $images;
 
 }
+function getValues($request){
+	$page = get_remote_data($request);
+	$page = str_replace("'","\"",$page);
+	$page = str_replace("\"","\n\n",$page);
+
+	$lines = getLines($page);
+	
+	$values = array();
+	foreach($lines as $line){
+		if(!has($line,"<") && !has($line,">") && !has($line,"=")){
+			array_push($values,$line);
+		}
+	}
+	return $values;
+}
