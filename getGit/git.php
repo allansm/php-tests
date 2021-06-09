@@ -1,5 +1,5 @@
 <?php
-/*
+
 include("import/ttodua.php");
 include("../functions/util.php");
 include("../functions/fileHandle.php");
@@ -25,20 +25,33 @@ function getContribution($user){
 			$contribution = find($line,"data-count=\"","\"");
 			$date = find($line,"data-date=\"","\"");
 			$level = find($line,"data-level=\"","\"");
-
+			
+		
 			$contributions[$i]["date"] = $date;
 			$contributions[$i]["level"] = $level;
 			$contributions[$i]["line"] = $gl++;
+			//$contributions[$i]["last"] = $last;
 			$contributions[$i++]["contribution"] = $contribution;
 		}
 	}
 	return $contributions;	
 }
-function txtGraph($contributions){	
+function getLast($contributions){
+	$last = array("","","");
+
+	foreach($contributions as $tmp){
+		$last[0] = $last[1]; 
+		$last[1] = $last[2];
+		$last[2] = $tmp["date"].":".$tmp["contribution"];
+	}
+
+	return $last;
+}
+function graph($contributions){	
 	$lines = array("","","","","","","");
 	$i = 0;
 
-	$last = "";
+	//$last = array("","","");
 
 	print("\n");
 	foreach($contributions as $tmp){
@@ -50,7 +63,12 @@ function txtGraph($contributions){
 
 	
 		$lines[$i++] .= $level." ";
-		$last = $tmp["date"].":".$tmp["contribution"];
+
+		/*
+		$last[0] = $last[1]; 
+		$last[1] = $last[2];
+		$last[2] = $tmp["date"].":".$tmp["contribution"];
+		 */
 	}
 	
 	$graph = "";
@@ -58,12 +76,12 @@ function txtGraph($contributions){
 		$graph .= "$line\n";
 	}
 	
-	$arr = array();
+	//$arr = array();
 	
-	$arr[0]["graph"] = $graph;
-	$arr[0]["last"] = $last;
+	return $graph;
+	//$arr[0]["last"] = $last;
 
-	return $arr;
+	//return $arr;
 }
 function yearGraph($contributions,$year){
 	$lines = array("","","","","","","");
@@ -80,16 +98,38 @@ function yearGraph($contributions,$year){
 			$lines[$tmp["line"]].=$tmp["level"]." ";
 		}
 	}
+	$graph = "";
 	foreach($lines as $line){
-		print("$line\n");
+		$graph .= "$line\n";
 	}
+
+	return $graph;
 }
+function yearGraphVertical($contribution,$year){
+	foreach($contributions as $tmp){
+		if(has($tmp["date"],$year)){
+			if($first){
+				/*for($i = 0;$i<$tmp["line"];$i++){
+					$lines[$i].= "  ";
+			}*/
+				$first = false;
+			}
+			//$lines[$tmp["line"]].=$tmp["level"]." ";
+		}
+	}
+
+}
+
 function yearGraphContribution($contributions,$year){
 	$lines = array("","","","","","","");
 	$first = true;
 	
 	foreach($contributions as $tmp){
 		if(has($tmp["date"],$year)){
+			if($tmp["contribution"] > 99){
+				$tmp["contribution"] = 99;
+			}
+
 			if($first){
 				for($i = 0;$i<$tmp["line"];$i++){
 					$lines[$i].= "   ";
@@ -102,17 +142,12 @@ function yearGraphContribution($contributions,$year){
 			$lines[$tmp["line"]].=$tmp["contribution"]." ";
 		}
 	}
+	$graph = "";
 	foreach($lines as $line){
-		print("$line\n");
+		$graph .= "$line\n";
 	}
-}
- */
-include("git.php");
-$contributions = getContribution("allansm");
-$graph = txtGraph($contributions)[0]["graph"];
-$last = txtGraph($contributions)[0]["last"];
 
-print("\n");
-yearGraph($contributions,2021);
-print("\n$last\n");
+	return $graph;
+
+}
 

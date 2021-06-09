@@ -1,11 +1,30 @@
 <?php
-
+/*
 include("import/ttodua.php");
 include("../functions/util.php");
 include("../functions/fileHandle.php");
+ */
+include("git.php");
+//$user = $argv[1];
 
-$user = $argv[1];
+$contribution = getContribution($argv[1]);
+/*
+foreach($contribution as $c){
+	$msg = $c["date"].":".$c["contribution"]."\n";
+	print($msg);
+}
+ */
 
+print("\n");
+print(yearGraphContribution($contribution,2021));
+foreach(getLast($contribution) as $last){
+	print("\n".$last."\n");
+}
+print("\n");
+//print_r(getLast($contribution));
+//print_r($arr[0]["last"]);
+
+/*
 $data = get_remote_data("https://github.com/users/$user/contributions");
 
 $lines = getLines($data);
@@ -46,4 +65,4 @@ if(array_key_exists(2,$argv)){
 if($persist != ""){
 	tempWdir("getGit");
 	file_put_contents(".log","$persist\n",FILE_APPEND);
-}
+}*/
