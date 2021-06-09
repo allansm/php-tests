@@ -30,7 +30,6 @@ function getContribution($user){
 			$contributions[$i]["date"] = $date;
 			$contributions[$i]["level"] = $level;
 			$contributions[$i]["line"] = $gl++;
-			//$contributions[$i]["last"] = $last;
 			$contributions[$i++]["contribution"] = $contribution;
 		}
 	}
@@ -50,9 +49,7 @@ function getLast($contributions){
 function graph($contributions){	
 	$lines = array("","","","","","","");
 	$i = 0;
-
-	//$last = array("","","");
-
+	
 	print("\n");
 	foreach($contributions as $tmp){
 		if($i == 7){
@@ -63,25 +60,15 @@ function graph($contributions){
 
 	
 		$lines[$i++] .= $level." ";
-
-		/*
-		$last[0] = $last[1]; 
-		$last[1] = $last[2];
-		$last[2] = $tmp["date"].":".$tmp["contribution"];
-		 */
+		
 	}
 	
 	$graph = "";
 	foreach($lines as $line){
 		$graph .= "$line\n";
 	}
-	
-	//$arr = array();
-	
+		
 	return $graph;
-	//$arr[0]["last"] = $last;
-
-	//return $arr;
 }
 function yearGraph($contributions,$year){
 	$lines = array("","","","","","","");
@@ -105,19 +92,25 @@ function yearGraph($contributions,$year){
 
 	return $graph;
 }
-function yearGraphVertical($contribution,$year){
+function yearGraphVertical($contributions,$year){
+	$graph = "";
+	$first = true;
 	foreach($contributions as $tmp){
 		if(has($tmp["date"],$year)){
 			if($first){
-				/*for($i = 0;$i<$tmp["line"];$i++){
-					$lines[$i].= "  ";
-			}*/
+				for($i = 0;$i<$tmp["line"];$i++){
+					$graph .= "  ";
+				}
 				$first = false;
 			}
-			//$lines[$tmp["line"]].=$tmp["level"]." ";
+			$graph.=$tmp["level"]." ";
+
+			if($tmp["line"] == 6){
+				$graph.="\n";
+			}
 		}
 	}
-
+	return $graph;
 }
 
 function yearGraphContribution($contributions,$year){
@@ -149,5 +142,30 @@ function yearGraphContribution($contributions,$year){
 
 	return $graph;
 
+}
+
+function yearGraphContributionVertical($contributions,$year){
+	$graph = "";
+	$first = true;
+	foreach($contributions as $tmp){
+		if(has($tmp["date"],$year)){
+			if($first){
+				for($i = 0;$i<$tmp["line"];$i++){
+					$graph .= "   ";
+				}
+				$first = false;
+			}
+			if(strlen($tmp["contribution"]) == 1){
+				$tmp["contribution"] = " ".$tmp["contribution"];
+			}
+
+			$graph.=$tmp["contribution"]." ";
+			
+			if($tmp["line"] == 6){
+				$graph.="\n";
+			}
+		}
+	}
+	return $graph;
 }
 
