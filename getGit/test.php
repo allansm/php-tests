@@ -34,9 +34,7 @@ function getContribution($user){
 	}
 	return $contributions;	
 }
-function txtGraph($contributions){
-	//$contributions = getContribution($user);
-
+function txtGraph($contributions){	
 	$lines = array("","","","","","","");
 	$i = 0;
 
@@ -47,30 +45,10 @@ function txtGraph($contributions){
 		if($i == 7){
 			$i = 0;
 		}
-		/*
-		if(strlen($tmp["contribution"]) == 1){
-			$tmp["contribution"] = " ".$tmp["contribution"];
-		}
-		 */
-		
+				
 		$level = $tmp["level"];
 
-		/*
-		$level = "";
-
-		if($tmp["level"] == 0){
-			$level = "X";
-		}else if($tmp["level"] == 1){
-			$level = "C";
-		}else if($tmp["level"] == 2){
-			$level = "B";
-		}else if($tmp["level"] == 3){
-			$level = "A";
-		}else{
-			$level = "S";
-		}
-		 */
-
+	
 		$lines[$i++] .= $level." ";
 		$last = $tmp["date"].":".$tmp["contribution"];
 	}
@@ -79,8 +57,6 @@ function txtGraph($contributions){
 	foreach($lines as $line){
 		$graph .= "$line\n";
 	}
-
-	//print("\nlast contribuitio  $last\n");
 	
 	$arr = array();
 	
@@ -134,37 +110,7 @@ $contributions = getContribution("allansm");
 $graph = txtGraph($contributions)[0]["graph"];
 $last = txtGraph($contributions)[0]["last"];
 
+print("\n");
 yearGraph($contributions,2021);
-print("\n");
-yearGraphContribution($contributions,2021);
-//print_r($contributions);
-//print("\n$graph");
-//print("\n$last\n");
-die();
+print("\n$last\n");
 
-$contributions = getContribution("allansm");
-
-$lines = array("","","","","","","");
-$i = 0;
-
-$last = "";
-
-print("\n");
-foreach($contributions as $tmp){
-	if($i == 7){
-		$i = 0;
-	}
-	/*
-	if(strlen($tmp["contribution"]) == 1){
-		$tmp["contribution"] = " ".$tmp["contribution"];
-	}
-	*/	
-	$lines[$i++] .= $tmp["level"]." ";
-	$last = $tmp["date"].":".$tmp["contribution"];
-}
-
-foreach($lines as $line){
-	print("$line\n");
-}
-
-print("\nlast contribuitio  $last\n");
