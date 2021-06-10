@@ -70,6 +70,31 @@ function graph($contributions){
 		
 	return $graph;
 }
+function graphVertical($contributions){
+	$graph = "";
+	//$first = true;
+	foreach($contributions as $tmp){
+		//if(has($tmp["date"],$year)){
+			/*if($first){
+				for($i = 0;$i<$tmp["line"];$i++){
+					$graph .= "   ";
+				}
+				$first = false;
+			}
+			if(strlen($tmp["contribution"]) == 1){
+				$tmp["contribution"] = " ".$tmp["contribution"];
+			}*/
+
+			$graph.=$tmp["level"]." ";
+			
+			if($tmp["line"] == 6){
+				$graph.="\n";
+			}
+		//}
+	}
+	return $graph;
+
+}
 function yearGraph($contributions,$year){
 	$lines = array("","","","","","","");
 	$first = true;
