@@ -86,7 +86,8 @@ function graphVertical($contributions){
 	return $graph;
 
 }
-function yearGraph($contributions,$year){
+function yearGraph($contributions){
+	$year = date("Y");
 	$lines = array("","","","","","","");
 	$first = true;
 	
@@ -108,7 +109,8 @@ function yearGraph($contributions,$year){
 
 	return $graph;
 }
-function yearGraphVertical($contributions,$year){
+function yearGraphVertical($contributions){
+	$year = date("Y");
 	$graph = "";
 	$first = true;
 	foreach($contributions as $tmp){
@@ -129,7 +131,8 @@ function yearGraphVertical($contributions,$year){
 	return $graph;
 }
 
-function yearGraphContribution($contributions,$year){
+function yearGraphContribution($contributions){
+	$year = date("Y");
 	$lines = array("","","","","","","");
 	$first = true;
 	
@@ -160,7 +163,8 @@ function yearGraphContribution($contributions,$year){
 
 }
 
-function yearGraphContributionVertical($contributions,$year){
+function yearGraphContributionVertical($contributions){
+	$year = date("Y");
 	$graph = "";
 	$first = true;
 	foreach($contributions as $tmp){
