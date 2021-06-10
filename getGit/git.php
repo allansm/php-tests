@@ -36,12 +36,16 @@ function getContribution($user){
 	return $contributions;	
 }
 function getLast($contributions){
-	$last = array("","","");
+	$last = array("","","","","","","");
 
 	foreach($contributions as $tmp){
 		$last[0] = $last[1]; 
-		$last[1] = $last[2];
-		$last[2] = $tmp["date"].":".$tmp["contribution"];
+		$last[1] = $last[2]; 
+		$last[2] = $last[3]; 
+		$last[3] = $last[4]; 
+		$last[4] = $last[5]; 
+		$last[5] = $last[6];
+		$last[6] = $tmp["date"].":".$tmp["contribution"];
 	}
 
 	return $last;
@@ -72,25 +76,12 @@ function graph($contributions){
 }
 function graphVertical($contributions){
 	$graph = "";
-	//$first = true;
 	foreach($contributions as $tmp){
-		//if(has($tmp["date"],$year)){
-			/*if($first){
-				for($i = 0;$i<$tmp["line"];$i++){
-					$graph .= "   ";
-				}
-				$first = false;
-			}
-			if(strlen($tmp["contribution"]) == 1){
-				$tmp["contribution"] = " ".$tmp["contribution"];
-			}*/
-
-			$graph.=$tmp["level"]." ";
-			
-			if($tmp["line"] == 6){
-				$graph.="\n";
-			}
-		//}
+		$graph.=$tmp["level"]." ";
+		
+		if($tmp["line"] == 6){
+			$graph.="\n";
+		}
 	}
 	return $graph;
 

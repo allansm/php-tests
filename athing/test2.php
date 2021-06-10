@@ -4,10 +4,13 @@ include("import\\ttodua.php");
 include("../functions/ff.php");
 include("../functions/util.php");
 include("../functions/mpv.php");
+include("../functions/fileHandle.php");
 
 function filter($txt,$pattern){	
 	return hasPattern($txt,$pattern);
 }
+
+tempWdir("athing");
 
 while(true){
 	$limit = (has($argv[1],"###")) ? find($argv[1],"###","###"):158;
@@ -32,6 +35,7 @@ while(true){
 	shuffle($links);
 	
 	print($links[0]."\n");
+	file_put_contents(".log",$links[0]."\n",FILE_APPEND);
 	
 	$second = get_remote_data($links[0]);
 
@@ -62,7 +66,8 @@ while(true){
 			
 			print("\n");
 			print($mp4."\n");
-			
+			file_put_contents(".log","$mp4\n\n",FILE_APPEND);
+
 			if(array_key_exists(6,$argv)){
 				$screen = $argv[6];	
 			}else{

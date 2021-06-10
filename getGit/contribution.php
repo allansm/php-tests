@@ -6,13 +6,11 @@ $contribution = getContribution($argv[1]);
 
 
 print("\n");
-//print(graphVertical($contribution));
-print(yearGraphContribution($contribution,2021));
-//print("\n");
-//print(yearGraphContributionVertical($contribution,2021));
-
+print(yearGraph($contribution,2021));
+print("\n");
 foreach(getLast($contribution) as $last){
-	print("\n".$last."\n");
+	print($last."\n");
 }
+
 print("\n");
 
