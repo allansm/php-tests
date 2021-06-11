@@ -55,3 +55,5 @@ foreach(getLast($contribution) as $last){
 
 print("\n");
 
+
+print("average contribution:".round(averageYear($contribution)));

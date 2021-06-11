@@ -50,6 +50,29 @@ function getLast($contributions){
 
 	return $last;
 }
+function average($contribution){
+	$n = 0;
+	$sum = 0;
+	foreach($contribution as $tmp){
+		$sum += $tmp["contribution"];
+		$n++;
+	}
+	//print("sum:$sum n:$ n:$nn");
+	return $sum/$n;
+}
+function averageYear($contribution){
+	$n = 0;
+	$sum = 0;
+	foreach($contribution as $tmp){
+		if(has($tmp["date"],date("Y"))){
+
+			$sum += $tmp["contribution"];
+			$n++;
+		}
+	}
+	//print("sum:$sum n:$ n:$nn");
+	return $sum/$n;
+}
 function graph($contributions){	
 	$lines = array("","","","","","","");
 	$i = 0;
