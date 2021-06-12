@@ -7,15 +7,15 @@ $contribution = getContribution($argv[1]);
 
 print("\n");
 $graph = yearGraph($contribution);
-$graph = str_replace("0","X",$graph);
-$graph = str_replace("1","C",$graph);
-$graph = str_replace("2","B",$graph);
-$graph = str_replace("3","A",$graph);
-$graph = str_replace("4","S",$graph);
+$graph = str_replace("0","x",$graph);
+$graph = str_replace("1","<",$graph);
+$graph = str_replace("2","=",$graph);
+$graph = str_replace("3",">",$graph);
+$graph = str_replace("4","+",$graph);
 
 print("$graph\n");
 
-print("X = none C = low B = mid A = high S = max\n\n");
+print("x : none\n< : low\n= : mid\n> : high\n+ : max\n\n");
 
 $graph = str_replace("\n"," ",$graph);
 
@@ -28,19 +28,19 @@ $a = 0;
 $s = 0;
 
 foreach($exp as $e){
-	if($e == "X"){
+	if($e == "x"){
 		$x++;
 	}
-	if($e == "C"){
+	if($e == "<"){
 		$c++;
 	}
-	if($e == "B"){
+	if($e == "="){
 		$b++;
 	}
-	if($e == "A"){
+	if($e == ">"){
 		$a++;
 	}
-	if($e == "S"){
+	if($e == "+"){
 		$s++;
 	}
 }
