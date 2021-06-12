@@ -6,7 +6,7 @@ $contribution = getContribution($argv[1]);
 
 
 print("\n");
-$graph = yearGraph($contribution,2021);
+$graph = yearGraph($contribution);
 $graph = str_replace("0","X",$graph);
 $graph = str_replace("1","C",$graph);
 $graph = str_replace("2","B",$graph);
@@ -14,6 +14,7 @@ $graph = str_replace("3","A",$graph);
 $graph = str_replace("4","S",$graph);
 
 print("$graph\n");
+
 print("X = none C = low B = mid A = high S = max\n\n");
 
 $graph = str_replace("\n"," ",$graph);
@@ -56,4 +57,7 @@ foreach(getLast($contribution) as $last){
 print("\n");
 
 
-print("average contribution:".round(averageYear($contribution)));
+print("average contribution:".round(averageYear($contribution))."\n");
+print("total contribution:".totalYearContribution($contribution));
+
+print("\n");

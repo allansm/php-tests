@@ -57,7 +57,6 @@ function average($contribution){
 		$sum += $tmp["contribution"];
 		$n++;
 	}
-	//print("sum:$sum n:$ n:$nn");
 	return $sum/$n;
 }
 function averageYear($contribution){
@@ -70,9 +69,26 @@ function averageYear($contribution){
 			$n++;
 		}
 	}
-	//print("sum:$sum n:$ n:$nn");
 	return $sum/$n;
 }
+function totalContribution($contribution){
+	$sum = 0;
+	foreach($contribution as $tmp){
+		$sum += $tmp["contribution"];
+	}
+	return $sum;
+
+}
+function totalYearContribution($contribution){
+	$sum = 0;
+	foreach($contribution as $tmp){
+		if(has($tmp["date"],date("Y"))){
+			$sum += $tmp["contribution"];
+		}
+	}
+	return $sum;
+}
+
 function graph($contributions){	
 	$lines = array("","","","","","","");
 	$i = 0;
