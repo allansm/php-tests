@@ -59,6 +59,16 @@ function average($contribution){
 	}
 	return $sum/$n;
 }
+function avarageLevel($contribution){
+	$n = 0;
+	$sum = 0;
+	foreach($contribution as $tmp){
+		$sum += $tmp["level"];
+		$n++;
+	}
+	return $sum/$n;
+
+}
 function averageYear($contribution){
 	$n = 0;
 	$sum = 0;
@@ -70,6 +80,19 @@ function averageYear($contribution){
 		}
 	}
 	return $sum/$n;
+}
+function avarageLevelYear($contribution){
+	$n = 0;
+	$sum = 0;
+	foreach($contribution as $tmp){
+		if(has($tmp["date"],date("Y"))){
+
+			$sum += $tmp["level"];
+			$n++;
+		}
+	}
+	return $sum/$n;
+
 }
 function totalContribution($contribution){
 	$sum = 0;
