@@ -61,6 +61,23 @@ function getImageLinks($request){
 	return $images;
 
 }
+function getMp4Links($request){
+	$page = get_remote_data($request);
+	$page = str_replace("<","\n",$page);
+	$page = str_replace(">","\n",$page);
+	$page = str_replace("'","\"",$page);
+	$page = str_replace("\"","\n\n",$page);
+
+	$lines = getLines($page);	
+
+	$mp4 = array();
+	foreach($lines as $line){
+		if(hasPattern($line,"http;.mp4")){
+			array_push($mp4,$line);
+		}
+	}
+	return $mp4;
+}
 function getValues($request){
 	$page = get_remote_data($request);
 	$page = str_replace("'","\"",$page);
