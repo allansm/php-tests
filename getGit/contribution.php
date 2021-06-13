@@ -50,6 +50,7 @@ $total = $worked+$x;
 print("x:$x\n<:$c\n=:$b\n>:$a\n+:$s\nworked days:$worked\ntotal:$total\n\n");
 
 print("contributions:\n\n");
+
 foreach(getLast($contribution) as $last){
 	print($last."\n");
 }
@@ -67,7 +68,8 @@ $avarageLevel = str_replace("3",">",$avarageLevel);
 $avarageLevel = str_replace("4","+",$avarageLevel);
 
 print("avarage concept : $avarageLevel\n");
-
-print("total contribution:".totalYearContribution($contribution));
+print("highest contribution:".highest($contribution)."\n");
+print("total contribution:".totalContribution($contribution)."\n");
+print("total contribution this year:".totalYearContribution($contribution));
 
 print("\n");

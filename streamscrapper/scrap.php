@@ -63,7 +63,7 @@ function play($n,$pn,$quality,$screen){
 				$url = file("data/room")[0];
 				print("watching:".$room."\n");
 				exec("echo ".$room." >> data/.log");
-				player($screen,$url);
+				mpv($screen,$url);
 			}	
 		}
 	}

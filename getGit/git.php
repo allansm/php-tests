@@ -94,6 +94,15 @@ function avarageLevelYear($contribution){
 	return $sum/$n;
 
 }
+function highest($contribution){
+	$highest = 0;
+	foreach($contribution as $tmp){
+		if($highest < $tmp["contribution"]){
+			$highest = $tmp["contribution"];	
+		}
+	}
+	return $highest;
+}
 function totalContribution($contribution){
 	$sum = 0;
 	foreach($contribution as $tmp){
