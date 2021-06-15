@@ -71,14 +71,33 @@ function test2($file){
 		foreach($lines as $line){
 			//print("$line\n");
 			$line = str_replace("\n","",$line);
+			
+			/*
 			$bytes = explode(" ",$line);
 			$bytes = array_diff($bytes,[""," "]);
 			$text.=getString($bytes);
+			 */
+			$text.= test3($line);
 		}
 		if($filename != ""){
 			file_put_contents($filename,$text);
 		}
 	}
+}
+
+function test3($line){
+	$len = strlen($line);
+	$text = "";
+	$byte = "";
+	for($i = 0;$i < $len;$i++){
+		if($line[$i] == " "){
+			$text.=chr($byte);
+			$byte = "";
+		}else{
+			$byte.=$line[$i];
+		}
+	}
+	return $text;
 }
 
 //addFile("test.png","test.compact");
