@@ -104,17 +104,6 @@ function test4($toadd,$file){
 	}
 	file_put_contents($file,"#\n",FILE_APPEND);
 
-	/*$data = implode("\n",$lines);
-	
-	$hex = "";
-	$hex.= bin2hex("$toadd");
-	$hex.="\n\n";
-	$hex.= bin2hex("$data");
-	$hex.="#\n\n";
-	 */
-	//file_put_contents($file,"!!!$toadd\n\n",FILE_APPEND);
-	//file_put_contents($file,"$data###\n\n",FILE_APPEND);
-	//file_put_contents($file,$hex,FILE_APPEND);
 }
 
 function test5($file){
@@ -134,10 +123,48 @@ function test5($file){
 		}
 	}	
 
-	//print($bin);
+}
+
+function test6($file){
+	$data = implode("\n",file($file));
+	$files = explode("#",$data);
+	$fns = [];
+	foreach($files as $tmp){
+		$tmp2 = explode("\n",$tmp);
+		$tmp2 = array_diff($tmp2,[""," "]);
+		$tmp2 = array_values($tmp2);
+
+		if(array_key_exists(0,$tmp2)){
+			$fn = hex2bin($tmp2[0]);
+			array_push($fns,$fn);
+			/*unset($tmp2[0]);
+			foreach($tmp2 as $line){
+				file_put_contents($fn,hex2bin($line)."\n",FILE_APPEND);
+			}*/
+		}
+	}
+	print_r($fns);
+	$index = readline("select number to extract:");
+	
+	$tmp = $files[$index];	
+
+	$tmp2 = explode("\n",$tmp);
+	$tmp2 = array_diff($tmp2,[""," "]);
+	$tmp2 = array_values($tmp2);
+
+	if(array_key_exists(0,$tmp2)){
+		$fn = hex2bin($tmp2[0]);
+		array_push($fns,$fn);
+		unset($tmp2[0]);
+		foreach($tmp2 as $line){
+			file_put_contents($fn,hex2bin($line)."\n",FILE_APPEND);
+		}
+	}
+	
 }
 
 //addFile("test.png","test.compact");
-//test4("test.png","test.compact");
-test5("test.compact");
+//test4("test.zip","test.compact");
+//test5("test.compact");
+test6("test.compact");
 //test2("test.compact");
