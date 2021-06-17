@@ -24,20 +24,6 @@ function writeBytes($bytes,$file){
 		file_put_contents($file,$byte." ",FILE_APPEND);	
 	}
 }
-/*
-function addFile($toadd,$file){
-	$basename = basename($toadd);
-	writeBytes(getBytes($basename),$file);
-	file_put_contents($file,"\n\n",FILE_APPEND);
-
-	$tmp = file($toadd);
-
-	foreach($tmp as $line){
-		writeBytes(getBytes($line),$file);
-	}
-	file_put_contents($file,"\n#\n",FILE_APPEND);
-}
- */
 function test($file){
 	$tmp = file($file);
 	foreach($tmp as $line){
@@ -94,21 +80,13 @@ function test3($line){
 }
 
 function addFile($toadd,$file){
-	//$lines = file($toadd);
 	$data = implode("",file($toadd));
-	
-	//die($data);
-
+		
 	$toadd = basename($toadd);
 
 	file_put_contents($file,bin2hex("$toadd"),FILE_APPEND);
 	file_put_contents($file,"@",FILE_APPEND);
 	
-	/*
-	foreach($lines as $line){
-		file_put_contents($file,bin2hex($line)."\n",FILE_APPEND);
-	}
-	 */
 	file_put_contents($file,bin2hex($data),FILE_APPEND);
 
 	file_put_contents($file,"#",FILE_APPEND);
@@ -124,16 +102,29 @@ function extractFiles($file){
 		$tmp2 = array_values($tmp2);
 
 		if(array_key_exists(0,$tmp2)){
-			$fn = hex2bin($tmp2[0]);
-			//unset($tmp2[0]);
-			file_put_contents($fn,hex2bin($tmp2[1]),FILE_APPEND);
-			/*foreach($tmp2 as $line){
-				file_put_contents($fn,hex2bin($line)."\n",FILE_APPEND);
-			}*/
-
+			$fn = hex2bin($tmp2[0]);	
+			file_put_contents($fn,hex2bin($tmp2[1]),FILE_APPEND);	
 		}
 	}
 }
+
+function extractFile($index,$file){
+	$data = file($file)[0];
+	$files = explode("#",$data);
+	$i = 0;
+	foreach($files as $tmp){
+		$tmp2 = explode("@",$tmp);
+		$tmp2 = array_diff($tmp2,[""," "]);
+		$tmp2 = array_values($tmp2);
+			
+		if($i++ == $index)
+		if(array_key_exists(0,$tmp2)){
+			$fn = hex2bin($tmp2[0]);	
+			file_put_contents($fn,hex2bin($tmp2[1]),FILE_APPEND);	
+		}
+	}
+}
+
 
 function showFiles($file){
 	$data = file($file)[0];
@@ -163,7 +154,6 @@ function showContent($index,$file){
 		
 		if($i++ == $index)
 		if(array_key_exists(0,$tmp2)){
-			//$fn = hex2bin($tmp2[0]);
 			print($tmp2[1]);
 			print("\n");
 			print(hex2bin($tmp2[1]));
@@ -227,8 +217,29 @@ function test6($file){
 
 //addFile("a.txt","test.compact");
 //addFile("b.txt","test.compact");
-addFile("hi.png","test.compact");
+//addFile("hi.png","test.compact");
 
 //extractFile("test2.compact");
-showFiles("test.compact");
-showContent(readline("index:"),"test.compact");
+//showFiles("test.compact");
+//showContent(readline("index:"),"test.compact");
+
+$wf = "";
+
+while(true){
+	$op = readline("op:");
+	$options = array("add","show","extract");
+	if($op == "add"){
+		//$wf = readline("work file:");
+		$toadd = readline("to add:");
+		addFile($toadd,$wf);
+	}else if($op == "show"){
+		//$wf = readline("work file:");
+		showFiles($wf);
+	}else if($op == "extract"){
+		//$wf = readline("work file:");
+		$index = readline("index:");
+		extractFile($index,$wf);
+	}else if($op == "wf"){
+		$wf = readline("work file:");	
+	}
+}
