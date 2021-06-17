@@ -137,10 +137,6 @@ function test6($file){
 		if(array_key_exists(0,$tmp2)){
 			$fn = hex2bin($tmp2[0]);
 			array_push($fns,$fn);
-			/*unset($tmp2[0]);
-			foreach($tmp2 as $line){
-				file_put_contents($fn,hex2bin($line)."\n",FILE_APPEND);
-			}*/
 		}
 	}
 	print_r($fns);
@@ -159,8 +155,7 @@ function test6($file){
 		foreach($tmp2 as $line){
 			file_put_contents($fn,hex2bin($line)."\n",FILE_APPEND);
 		}
-	}
-	
+	}	
 }
 
 //addFile("test.png","test.compact");
