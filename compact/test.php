@@ -24,7 +24,7 @@ function writeBytes($bytes,$file){
 		file_put_contents($file,$byte." ",FILE_APPEND);	
 	}
 }
-
+/*
 function addFile($toadd,$file){
 	$basename = basename($toadd);
 	writeBytes(getBytes($basename),$file);
@@ -37,7 +37,7 @@ function addFile($toadd,$file){
 	}
 	file_put_contents($file,"\n#\n",FILE_APPEND);
 }
-
+ */
 function test($file){
 	$tmp = file($file);
 	foreach($tmp as $line){
@@ -93,18 +93,85 @@ function test3($line){
 	return $text;
 }
 
-function test4($toadd,$file){
-	$lines = file($toadd);
+function addFile($toadd,$file){
+	//$lines = file($toadd);
+	$data = implode("",file($toadd));
 	
-	file_put_contents($file,bin2hex("$toadd"),FILE_APPEND);
-	file_put_contents($file,"\n",FILE_APPEND);
+	//die($data);
 
+	$toadd = basename($toadd);
+
+	file_put_contents($file,bin2hex("$toadd"),FILE_APPEND);
+	file_put_contents($file,"@",FILE_APPEND);
+	
+	/*
 	foreach($lines as $line){
 		file_put_contents($file,bin2hex($line)."\n",FILE_APPEND);
 	}
-	file_put_contents($file,"#\n",FILE_APPEND);
+	 */
+	file_put_contents($file,bin2hex($data),FILE_APPEND);
+
+	file_put_contents($file,"#",FILE_APPEND);
 
 }
+
+function extractFiles($file){
+	$data = file($file)[0];
+	$files = explode("#",$data);
+	foreach($files as $tmp){
+		$tmp2 = explode("@",$tmp);
+		$tmp2 = array_diff($tmp2,[""," "]);
+		$tmp2 = array_values($tmp2);
+
+		if(array_key_exists(0,$tmp2)){
+			$fn = hex2bin($tmp2[0]);
+			//unset($tmp2[0]);
+			file_put_contents($fn,hex2bin($tmp2[1]),FILE_APPEND);
+			/*foreach($tmp2 as $line){
+				file_put_contents($fn,hex2bin($line)."\n",FILE_APPEND);
+			}*/
+
+		}
+	}
+}
+
+function showFiles($file){
+	$data = file($file)[0];
+	$files = explode("#",$data);
+	$arr = [];
+	foreach($files as $tmp){
+		$tmp2 = explode("@",$tmp);
+		$tmp2 = array_diff($tmp2,[""," "]);
+		$tmp2 = array_values($tmp2);
+
+		if(array_key_exists(0,$tmp2)){
+			$fn = hex2bin($tmp2[0]);
+			array_push($arr,$fn);
+		}
+	}
+	print_r($arr);
+}
+
+function showContent($index,$file){
+	$data = file($file)[0];
+	$files = explode("#",$data);
+	$i = 0;
+	foreach($files as $tmp){
+		$tmp2 = explode("@",$tmp);
+		$tmp2 = array_diff($tmp2,[""," "]);
+		$tmp2 = array_values($tmp2);
+		
+		if($i++ == $index)
+		if(array_key_exists(0,$tmp2)){
+			//$fn = hex2bin($tmp2[0]);
+			print($tmp2[1]);
+			print("\n");
+			print(hex2bin($tmp2[1]));
+		}
+	}
+	
+}
+
 
 function test5($file){
 	$data = implode("\n",file($file));
@@ -158,8 +225,10 @@ function test6($file){
 	}	
 }
 
-//addFile("test.png","test.compact");
-//test4("test.zip","test.compact");
-//test5("test.compact");
-test6("test.compact");
-//test2("test.compact");
+//addFile("a.txt","test.compact");
+//addFile("b.txt","test.compact");
+addFile("hi.png","test.compact");
+
+//extractFile("test2.compact");
+showFiles("test.compact");
+showContent(readline("index:"),"test.compact");
