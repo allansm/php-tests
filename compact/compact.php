@@ -1,5 +1,5 @@
 <?php
-
+/*
 function getBytes($string){
 	$bytes = array();
 	$len = strlen($string);
@@ -78,7 +78,7 @@ function test3($line){
 	}
 	return $text;
 }
-
+ */
 function addFile($toadd,$file){
 	$data = implode("",file($toadd));
 		
@@ -162,7 +162,7 @@ function showContent($index,$file){
 	
 }
 
-
+/*
 function test5($file){
 	$data = implode("\n",file($file));
 	$files = explode("#",$data);
@@ -214,32 +214,29 @@ function test6($file){
 		}
 	}	
 }
+ */
+function console(){
+	$wf = "";
 
-//addFile("a.txt","test.compact");
-//addFile("b.txt","test.compact");
-//addFile("hi.png","test.compact");
-
-//extractFile("test2.compact");
-//showFiles("test.compact");
-//showContent(readline("index:"),"test.compact");
-
-$wf = "";
-
-while(true){
-	$op = readline("op:");
-	$options = array("add","show","extract");
-	if($op == "add"){
-		//$wf = readline("work file:");
-		$toadd = readline("to add:");
-		addFile($toadd,$wf);
-	}else if($op == "show"){
-		//$wf = readline("work file:");
-		showFiles($wf);
-	}else if($op == "extract"){
-		//$wf = readline("work file:");
-		$index = readline("index:");
-		extractFile($index,$wf);
-	}else if($op == "wf"){
-		$wf = readline("work file:");	
+	while(true){
+		$op = readline("op:");
+		$options = array("add","show","extract","wf");
+		if($op == "add"){
+			$toadd = readline("to add:");
+			addFile($toadd,$wf);
+		}else if($op == "show"){
+			showFiles($wf);
+		}else if($op == "extract"){
+			$index = readline("index:");
+			extractFile($index,$wf);
+		}else if($op == "wf"){
+			$wf = readline("work file:");	
+		}else if($op == "help"){
+			foreach($options as $o){
+				print("$o\n");
+			}
+		}
 	}
 }
+
+console();
