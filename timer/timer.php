@@ -41,8 +41,8 @@ while(true){
 
 		if($once){
 			$once = false;
-			toast("time to $title","Timer","bin/notifu");
 			persist("time to $title reached");
+			toast("time to $title","Timer","bin/notifu");
 		}
 		
 		exec("ffplay -nodisp -loop 0 -autoexit -loglevel 0 1.wav");

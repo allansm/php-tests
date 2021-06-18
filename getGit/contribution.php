@@ -47,7 +47,7 @@ foreach($exp as $e){
 
 $worked = $c+$b+$a+$s;
 $total = $worked+$x;
-print("x:$x\n<:$c\n=:$b\n>:$a\n+:$s\nworked days:$worked\ntotal:$total\n\n");
+print("x:$x\n<:$c\n=:$b\n>:$a\n+:$s\n\nworked days:$worked\ntotal:$total\n\n");
 
 print("contributions:\n\n");
 
