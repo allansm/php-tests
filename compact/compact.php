@@ -95,7 +95,6 @@ function console(){
 		$options = array("add","show","extract","wf","extractAll");
 		if($op == "add"){
 			$toadd = readline("to add:");
-			print(getsizemb($toadd)."\n");
 			addFile($toadd,$wf);
 		}else if($op == "show"){
 			showFiles($wf);
