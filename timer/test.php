@@ -17,15 +17,16 @@ function persist($msg){
 	}
 }
 
-function pause($ret){
-	if(file_exists("data/pause")){
+function stop($title,$wait,$clock){
+	if(file_exists("data/stop")){
 		clean();
-		echo "stopped.";
-		pause(true);	
-	}else{
-		return $ret;
+		print("waiting to ".$title."\n");
+		print("waiting:".$wait."\n");
+		print("timer:".$clock."\n");
+		echo "stopped...";
+		sleep(1);
+		stop($title,$wait,$clock);	
 	}
-
 }
 
 
@@ -38,6 +39,8 @@ $once = true;
 $elapsed = elapsed($start);
 
 while(true){
+	$start = timeToMillis();
+
 	clean();	
 	$hour = toHour($elapsed);
 	$minute = toMinute($elapsed) - (60*$hour);
@@ -62,10 +65,7 @@ while(true){
 	}else{
 		sleep(1);
 	}
-
-	$paused = elapsed($start);
-	if(pause(false)){
-		$start = timeToMillis() + $paused;
-	}
+	$elapsed = elapsed($start) + $elapsed;
+	stop($title,$wait,$clock);
 }
 
