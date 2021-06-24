@@ -45,7 +45,6 @@ while(true){
 	$third = "";
 	foreach($lines2 as $line){
 		if(filter($line,$argv[3])){
-			//print($line."\n");
 			$fnd = find($line,"href=\"","\"");
 			print("$fnd\n");
 			$third = get_remote_data($fnd);
@@ -57,14 +56,13 @@ while(true){
 	$forth = "";
 	foreach($lines3 as $line){
 		if(filter($line,$argv[4])){
-			//print($line."\n");
 			$fnd = find($line,"href=\"","\"");
 			print("$fnd\n");
 			$forth = get_remote_data($fnd);
 		}
 	}
 	$lines4 = explode("\n",$forth);
-	//print("\n\nforth:".$forth."\n\n");
+	
 	foreach($lines4 as $line){
 		if(filter($line,$argv[5])){
 			$mp4 = find($line,"href=\"","\"");
