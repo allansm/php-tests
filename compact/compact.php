@@ -18,6 +18,21 @@ function addFile($toadd,$file){
 
 }
 
+function addFileTest($toadd,$file){
+	$data = fopen($toadd,"rb");
+	
+	$toadd = basename($toadd);
+
+	file_put_contents($file,bin2hex("$toadd"),FILE_APPEND);
+	file_put_contents($file,"@",FILE_APPEND);
+	
+	while(!feof($data)){
+		$char = fread($data,1);
+		file_put_contents($file,bin2hex($char),FILE_APPEND);
+	}
+	file_put_contents($file,"#",FILE_APPEND);
+}
+
 function extractFiles($file){
 	$data = file($file)[0];
 	$files = explode("#",$data);
@@ -95,7 +110,7 @@ function console(){
 		$options = array("add","show","extract","wf","extractAll");
 		if($op == "add"){
 			$toadd = readline("to add:");
-			addFile($toadd,$wf);
+			addFileTest($toadd,$wf);
 		}else if($op == "show"){
 			showFiles($wf);
 		}else if($op == "extract"){
