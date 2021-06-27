@@ -31,6 +31,8 @@ function addFileTest($toadd,$file){
 		file_put_contents($file,bin2hex($char),FILE_APPEND);
 	}
 	file_put_contents($file,"#",FILE_APPEND);
+
+	fclose($data);
 }
 
 function extractFiles($file){
@@ -54,19 +56,32 @@ function extractFilesTest($file){
 	$colected = "";
 	while(!feof($data)){
 		$char = fread($data,1);
-		$colected .= $char;
+		
+		if($char != "@" && $char != "#"){
+			$colected .= $char;
+		}
 		
 		if($char == "@"){
-			$fname = $colected;
+			$fname = hex2bin($colected);
 			$colected = "";
+			print("$fname\n");
 		}
 		if($char == "#"){
+			if($colected != ""){
+				print(hex2bin($colected));
+				file_put_contents($fname,hex2bin($colected),FILE_APPEND);
+				$colected = "";
+			}
 			$fname = "";
 		}
-		if($fname != ""){
-			file_put_contents($fname,hex2bin($char),FILE_APPEND);
-		}	
+		if($fname != "" && strlen($colected) == 10240000){
+			print(hex2bin($colected));
+			file_put_contents($fname,hex2bin($colected),FILE_APPEND);
+			$colected = "";
+		}
 	}
+	print("\n");
+	fclose($data);
 }
 
 function extractFile($index,$file){
@@ -144,7 +159,7 @@ function console(){
 				print("$o\n");
 			}
 		}else if($op == "extractAll"){
-			extractAll($wf);
+			extractFilesTest($wf);
 		}
 	}
 }
