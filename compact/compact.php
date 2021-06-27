@@ -27,7 +27,7 @@ function addFileTest($toadd,$file){
 	file_put_contents($file,"@",FILE_APPEND);
 	
 	while(!feof($data)){
-		$char = fread($data,1);
+		$char = fread($data,10240);
 		file_put_contents($file,bin2hex($char),FILE_APPEND);
 	}
 	file_put_contents($file,"#",FILE_APPEND);
@@ -45,6 +45,27 @@ function extractFiles($file){
 			$fn = hex2bin($tmp2[0]);	
 			file_put_contents($fn,hex2bin($tmp2[1]),FILE_APPEND);	
 		}
+	}
+}
+
+function extractFilesTest($file){
+	$data = fopen($file,"rb");
+	$fname = "";
+	$colected = "";
+	while(!feof($data)){
+		$char = fread($data,1);
+		$colected .= $char;
+		
+		if($char == "@"){
+			$fname = $colected;
+			$colected = "";
+		}
+		if($char == "#"){
+			$fname = "";
+		}
+		if($fname != ""){
+			file_put_contents($fname,hex2bin($char),FILE_APPEND);
+		}	
 	}
 }
 
