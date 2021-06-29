@@ -64,28 +64,26 @@ function extractFilesTest($file){
 		if($char == "@"){
 			$fname = hex2bin($colected);
 			$colected = "";
-			//print("$fname\n");
 		}
 		if($char == "#"){
 			if($colected != ""){
-				//print(hex2bin($colected));
 				file_put_contents($fname,hex2bin($colected),FILE_APPEND);
 				$colected = "";
 			}
 			$fname = "";
 		}
 		if($fname != "" && strlen($colected) == 10240000){
-			//print(hex2bin($colected));
+			
 			file_put_contents($fname,hex2bin($colected),FILE_APPEND);
 			$colected = "";
 		}
 	}
-	//print("\n");
+
 	fclose($data);
 }
 
 //deprecated
-function extractFile($index,$file){
+/*function extractFile($index,$file){
 	$data = file($file)[0];
 	$files = explode("#",$data);
 	$i = 0;
@@ -100,7 +98,7 @@ function extractFile($index,$file){
 			file_put_contents($fn,hex2bin($tmp2[1]),FILE_APPEND);	
 		}
 	}
-}
+}*/
 
 function extractFileTest($index,$file){
 	$data = fopen($file,"rb");
@@ -117,12 +115,10 @@ function extractFileTest($index,$file){
 		if($char == "@"){
 			$fname = hex2bin($colected);
 			$colected = "";
-			//print("$fname\n");
 		}
 		if($char == "#"){
 			if($colected != ""){
 				if($index == $i){
-					//print(hex2bin($colected));
 					file_put_contents($fname,hex2bin($colected),FILE_APPEND);
 				}
 				$colected = "";
@@ -131,12 +127,10 @@ function extractFileTest($index,$file){
 			$i++;
 		}
 		if($fname != "" && strlen($colected) == 10240000 && $index == $i){
-			//print(hex2bin($colected));
 			file_put_contents($fname,hex2bin($colected),FILE_APPEND);
 			$colected = "";
 		}
 	}
-	//print("\n");
 	fclose($data);
 }
 
