@@ -101,7 +101,7 @@ function extractFile($index,$file){
 	}
 }
 
-
+/*
 function showFiles($file){
 	$data = file($file)[0];
 	$files = explode("#",$data);
@@ -118,6 +118,7 @@ function showFiles($file){
 	}
 	print_r($arr);
 }
+ */
 
 function showFilesTest($file){
 	$data = fopen($file,"rb");
@@ -135,20 +136,16 @@ function showFilesTest($file){
 		if($char == "@"){
 			$fname = hex2bin($colected);
 			$colected = "";
-			//print("$fname\n");
+			
 			$files[$i++] = $fname;
 		}
 		if($char == "#"){
 			if($colected != ""){
-				//print(hex2bin($colected));
-				//file_put_contents($fname,hex2bin($colected),FILE_APPEND);
 				$colected = "";
 			}
 			$fname = "";
 		}
 		if($fname != "" && strlen($colected) == 10240000){
-			//print(hex2bin($colected));
-			//file_put_contents($fname,hex2bin($colected),FILE_APPEND);
 			$colected = "";
 		}
 	}
