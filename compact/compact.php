@@ -4,7 +4,7 @@ function getsizemb($file){
 	return round((filesize($file)/1024)/1024);
 }
 
-function addFileTest($toadd,$file){
+function addFile($toadd,$file){
 	$data = fopen($toadd,"rb");
 	
 	$toadd = basename($toadd);
@@ -13,7 +13,7 @@ function addFileTest($toadd,$file){
 	file_put_contents($file,"@",FILE_APPEND);
 	
 	while(!feof($data)){
-		$char = fread($data,10240);
+		$char = fread($data,102400);
 		file_put_contents($file,bin2hex($char),FILE_APPEND);
 	}
 	file_put_contents($file,"#",FILE_APPEND);
@@ -21,7 +21,7 @@ function addFileTest($toadd,$file){
 	fclose($data);
 }
 
-function extractFilesTest($file){
+function extractFiles($file){
 	$data = fopen($file,"rb");
 	$fname = "";
 	$colected = "";
@@ -54,7 +54,7 @@ function extractFilesTest($file){
 }
 
 
-function extractFileTest($index,$file){
+function extractFile($index,$file){
 	$data = fopen($file,"rb");
 	$fname = "";
 	$colected = "";
@@ -89,7 +89,7 @@ function extractFileTest($index,$file){
 }
 
 
-function showFilesTest($file){
+function showFiles($file){
 	$data = fopen($file,"rb");
 	$files = [];
 	$fname = "";
@@ -151,12 +151,12 @@ function console(){
 		$options = array("add","show","extract","wf","extractAll");
 		if($op == "add"){
 			$toadd = readline("to add:");
-			addFileTest($toadd,$wf);
+			addFile($toadd,$wf);
 		}else if($op == "show"){
-			showFilesTest($wf);
+			showFiles($wf);
 		}else if($op == "extract"){
 			$index = readline("index:");
-			extractFileTest($index,$wf);
+			extractFile($index,$wf);
 		}else if($op == "wf"){
 			$wf = readline("work file:");	
 		}else if($op == "help"){
@@ -164,7 +164,7 @@ function console(){
 				print("$o\n");
 			}
 		}else if($op == "extractAll"){
-			extractFilesTest($wf);
+			extractFiles($wf);
 		}
 	}
 }
