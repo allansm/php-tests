@@ -90,6 +90,20 @@ function download($url,$folder){
 	}        
 }
 
+function download2($url,$folder,$file_name){
+	//$file_name = basename($url);
+	
+	//$file_name = $folder.$file_name;
+	
+	//$file_name = str_replace("=","",$file_name);
+	//$file_name = str_replace("?","",$file_name);
+
+	if(file_put_contents( $file_name,file_get_contents($url))) {
+		echo "File downloaded successfully\n";
+	}        
+}
+
+
 function remoteSize($url) {
 	$headers = get_headers($url, 1);
 	$filesize = $headers['Content-Length'];

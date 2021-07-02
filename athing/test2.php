@@ -76,7 +76,7 @@ while(true){
 			}else{
 				$screen = "";
 			}
-			
+	
 			mpv($screen,$mp4);
 		}
 	}
