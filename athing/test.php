@@ -2,6 +2,7 @@
 
 include("import\\ttodua.php");
 include("../functions/ff.php");
+include("../functions/mpv.php");
 function find($html,$p1,$p2){
 	$p1 = str_replace("/", "\/", $p1);
 	$p2 = str_replace("/", "\/", $p2);
@@ -52,7 +53,7 @@ while(true){
 
 	foreach($links2 as $l){
 		if(array_key_exists(0,find($l,"720",""))){
-			player($screen,$l);
+			mpv($screen,$l);
 		}
 	}
 	$url = $old;
