@@ -1,4 +1,5 @@
 <?php
+include("../functions/util.php");
 
 $code = file_get_contents("http://wttr.in");
 $code = str_replace("<pre>","@@@\n",$code);
@@ -6,7 +7,6 @@ $code = str_replace("┌","@@@\n",$code);
 
 $lines = explode("@@@\n",$code);
 
-//print_r($lines);
 $data = $lines[1];
 
 $data = str_replace("<","\n\n",$data);
@@ -16,13 +16,22 @@ unset($lines);
 
 $lines = explode("\n\n",$data);
 
-//print_r($lines);
-
 $place = str_replace("\n","",$lines[0]);
+$place = explode(":",$place)[1];
 
 $state = trim($lines[5]);
 
-$temperature = $lines[15].$lines[17];
+$i = 0;
+foreach($lines as $line){
+	if(has($line,"°C")){
+		break;			
+	}
+	$i++;
+}
+
+$temperature = $lines[$i-2].$lines[$i];
 
 
-print("$place\nstate : $state\ntemperature : $temperature");
+print("place : $place\nstate : $state\ntemperature : $temperature");
+
+//print_r($lines);
