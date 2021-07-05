@@ -34,4 +34,3 @@ $temperature = $lines[$i-2].$lines[$i];
 
 print("place : $place\nstate : $state\ntemperature : $temperature");
 
-//print_r($lines);
