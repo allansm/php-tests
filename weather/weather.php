@@ -29,8 +29,7 @@ foreach($lines as $line){
 	$i++;
 }
 
-$temperature = $lines[$i-2].$lines[$i];
+$temperature = $lines[$i-2]." °C";
 
 
-print("place : $place\nstate : $state\ntemperature : $temperature");
-
+print("place : $place\ntemperature : $temperature");
