@@ -73,3 +73,9 @@ print("total contribution:".totalContribution($contribution)."\n");
 print("total contribution this year:".totalYearContribution($contribution));
 
 print("\n");
+/*
+if(!array_key_exists(2,$argv)){
+	$result = exec("php stat.php ".$argv[1]." stop");
+	tempWdir("getGit");
+	file_put_contents($argv[1].".txt",$result);
+}*/
