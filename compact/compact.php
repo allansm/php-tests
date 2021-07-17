@@ -1,4 +1,6 @@
 <?php
+include("../functions/util.php");
+
 
 function getsizemb($file){
 	return round((filesize($file)/1024)/1024);
@@ -51,6 +53,77 @@ function extractFiles($file){
 	}
 
 	fclose($data);
+}
+
+function extractFilesTest($file){
+	$data = fopen($file,"rb");
+	$fname = "";
+	$colected = "";
+	$tmp = "";
+	while(!feof($data)){
+		$b = fread($data,10240000);
+		//print($b);
+		$colected = $b;
+		if(has($colected,"@")){
+			$fname = explode("@",$colected)[0];
+			$fname = hex2bin($fname);
+			$colected = explode("@",$colected)[1];
+			//die($colected);
+		}
+		if(has($colected,"#")){
+			$tmp = explode("#",$colected)[0];
+			if($tmp != "" && !has($tmp,"#")){
+				//print($tmp);
+				//$tmp = str_replace("\n","",$tmp);
+				//$tmp = str_replace("\r","",$tmp);
+				//$tmp = str_replace(" ","",$tmp);
+				/*if(strlen($tmp) % 2 == 0){
+					print("size ok");
+				}else{
+					print("size problem");
+				}*/
+				file_put_contents("test.txt",$tmp);
+				file_put_contents($fname,hex2bin($tmp),FILE_APPEND);
+				$fname = "";
+				$colected = explode("#",$colected)[1];
+			}else{
+				$tmp = str_replace("#","",$colected);
+				file_put_contents($fname,hex2bin($tmp),FILE_APPEND);
+				$fname = "";
+				
+				$tmp = "";
+				$colected = "";
+			}
+		}
+		if($fname != "" && $colected != "" && strlen($colected) % 2 == 0){
+			file_put_contents($fname,hex2bin($colected),FILE_APPEND);
+			$colected = "";
+		}
+		//for($i =0;$i<strlen($chars);$i++){
+		//	$char = $chars[$i];
+
+			/*if($char != "@" && $char != "#"){
+				$colected .= $char;
+			}
+			
+			if($char == "@"){
+				$fname = hex2bin($colected);
+				$colected = "";
+			}
+			if($char == "#"){
+				if($colected != ""){
+					file_put_contents($fname,hex2bin($colected),FILE_APPEND);
+					$colected = "";
+				}
+				$fname = "";
+			}
+			if($fname != "" && strlen($colected) == 10240000){
+				
+				file_put_contents($fname,hex2bin($colected),FILE_APPEND);
+				$colected = "";
+			}*/
+		//}
+	}
 }
 
 
@@ -164,7 +237,8 @@ function console(){
 				print("$o\n");
 			}
 		}else if($op == "extractAll"){
-			extractFiles($wf);
+			//extractFiles($wf);
+			extractFilesTest($wf);
 		}
 	}
 }

@@ -73,23 +73,13 @@ function test3(){
 
 function test4($skip,$b){
 	$file = fopen("test.txt","rb");
-	while(!feof($file)){
-		if($skip != 0){
-			$skip+=1;
-			$skipped = fread($file,$skip);
-
-		}
-		$b = $b-$skip;
-		if($skip == 0){
-			$b-=1;
-		}/*else{
-			$b+=1;
-			}*/
+	fseek($file,$skip);
+	//while(!feof($file)){
 		$text = fread($file,$b);
 		print($text);
 		fclose($file);
-		break;
-	}	
+		//break;
+	//}	
 }
 
 function test5(){
@@ -108,13 +98,6 @@ function hugeText(){
 	}
 	return $huge;
 }
-//hugeText();
-//test();
+
 test3();
-//echo hugeText();
-test4(0,11);
-print("\n");
-test4(10,16);
-print("\n");
-test4(16,19);
-//test5();
+test4(10,6);
