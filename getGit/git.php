@@ -4,7 +4,7 @@ include("../functions/util.php");
 include("../functions/fileHandle.php");
 
 function getContribution($user){
-	$data = file_get_contents("https://github.com/users/$user/contributions");
+	$data = @file_get_contents("https://github.com/users/$user/contributions");
 
 	$lines = getLines($data);
 	$higher = 0;

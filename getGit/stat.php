@@ -5,8 +5,15 @@ include("git.php");
 $contribution = getContribution($argv[1]);
 
 
-print("\n");
+
 $graph = yearGraph($contribution);
+
+if(explode("\n",$graph)[0] == ""){
+	die();
+}
+
+print("\n");
+
 $graph = str_replace("0","x",$graph);
 $graph = str_replace("1","<",$graph);
 $graph = str_replace("2","=",$graph);
@@ -73,9 +80,10 @@ print("total contribution:".totalContribution($contribution)."\n");
 print("total contribution this year:".totalYearContribution($contribution));
 
 print("\n");
-/*
+
 if(!array_key_exists(2,$argv)){
 	$result = exec("php stat.php ".$argv[1]." stop");
 	tempWdir("getGit");
-	file_put_contents($argv[1].".txt",$result);
-}*/
+	print("result :$result");
+	//file_put_contents($argv[1].".txt",$result);
+}
