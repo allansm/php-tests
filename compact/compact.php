@@ -60,14 +60,14 @@ function extractFilesTest($file){
 	$fname = "";
 	$colected = "";
 	$tmp = "";
-	while(!feof($data)){
+	while(!feof($data) || $colected != ""){
 		$b = fread($data,10240000);
 		//print($b);
-		$colected = $b;
-		if(has($colected,"@")){
-			$fname = explode("@",$colected)[0];
-			$fname = hex2bin($fname);
-			$colected = explode("@",$colected)[1];
+		$colected .= $b;
+		if(has($colected,"@") && $fname == ""){
+			$bname = explode("@",$colected)[0];
+			$fname = hex2bin($bname);
+			$colected = str_replace("$bname@","",$colected);//explode("@",$colected)[1];
 			//die($colected);
 		}
 		if(has($colected,"#")){
@@ -82,20 +82,24 @@ function extractFilesTest($file){
 				}else{
 					print("size problem");
 				}*/
-				file_put_contents("test.txt",$tmp);
+				//file_put_contents("test.txt",$tmp);
 				file_put_contents($fname,hex2bin($tmp),FILE_APPEND);
 				$fname = "";
-				$colected = explode("#",$colected)[1];
-			}else{
+				$colected = str_replace("$tmp#","",$colected);//explode("#",$colected)[1];
+			}/*else{
 				$tmp = str_replace("#","",$colected);
 				file_put_contents($fname,hex2bin($tmp),FILE_APPEND);
 				$fname = "";
 				
 				$tmp = "";
 				$colected = "";
-			}
+			}*/
 		}
-		if($fname != "" && $colected != "" && strlen($colected) % 2 == 0){
+		if($fname != "" && $colected != ""){
+			while(!(strlen($colected) % 2 == 0)){
+				$b = fread($data,1);
+				$colected.=$b;
+			}
 			file_put_contents($fname,hex2bin($colected),FILE_APPEND);
 			$colected = "";
 		}
