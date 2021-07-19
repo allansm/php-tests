@@ -15,14 +15,14 @@ function addFile($toadd,$file){
 	file_put_contents($file,"@",FILE_APPEND);
 	
 	while(!feof($data)){
-		$char = fread($data,102400);
+		$char = fread($data,10240000);
 		file_put_contents($file,bin2hex($char),FILE_APPEND);
 	}
 	file_put_contents($file,"#",FILE_APPEND);
 
 	fclose($data);
 }
-
+/*
 function extractFiles($file){
 	$data = fopen($file,"rb");
 	$fname = "";
@@ -53,9 +53,9 @@ function extractFiles($file){
 	}
 
 	fclose($data);
-}
+}*/
 
-function extractFilesTest($file,$index){
+function extractFiles($file){
 	$data = fopen($file,"rb");
 	$fname = "";
 	$colected = "";
@@ -89,7 +89,7 @@ function extractFilesTest($file,$index){
 	}
 }
 
-
+/*
 function extractFile($index,$file){
 	$data = fopen($file,"rb");
 	$fname = "";
@@ -123,8 +123,8 @@ function extractFile($index,$file){
 	}
 	fclose($data);
 }
-
-function extractFileTest($file,$index){
+ */
+function extractFile($file,$index){
 	$data = fopen($file,"rb");
 	$fname = "";
 	$colected = "";
@@ -165,8 +165,50 @@ function extractFileTest($file,$index){
 	}
 }
 
+function extractByName($file,$name){
+	$data = fopen($file,"rb");
+	$fname = "";
+	$colected = "";
+	$tmp = "";
+	//$i = 0;
+	while(!feof($data) || $colected != ""){
+		$b = fread($data,10240000);	
+		$colected .= $b;
+		if(has($colected,"@") && $fname == ""){
+			$bname = explode("@",$colected)[0];
+			$fname = hex2bin($bname);
+			$colected = str_replace("$bname@","",$colected);
+			
+		}
+		if(has($colected,"#")){
+			$tmp = explode("#",$colected)[0];
+			if($tmp != "" && !has($tmp,"#")){
+				if($name == $fname){
+					file_put_contents($fname,hex2bin($tmp),FILE_APPEND);
+					fclose($data);
+					break;
+				}
+				//$i++;
+				$fname = "";
+				$colected = str_replace("$tmp#","",$colected);
+			}
+		}
+		if($fname != "" && $colected != ""){
+			while(!(strlen($colected) % 2 == 0)){
+				$b = fread($data,1);
+				$colected.=$b;
+			}
+			if($name == $fname){
+				file_put_contents($fname,hex2bin($colected),FILE_APPEND);
+			}
+			$colected = "";
+		}
+	}
+	
+}
 
 
+/*
 function showFiles($file){
 	$data = fopen($file,"rb");
 	$files = [];
@@ -201,8 +243,8 @@ function showFiles($file){
 	print_r($files);
 	
 }
-
-function showFilesTest($file){
+ */
+function showFiles($file){
 	$data = fopen($file,"rb");
 	$fname = "";
 	$colected = "";
@@ -221,8 +263,6 @@ function showFilesTest($file){
 		if(has($colected,"#")){
 			$tmp = explode("#",$colected)[0];
 			if($tmp != "" && !has($tmp,"#")){
-				
-				//file_put_contents($fname,hex2bin($tmp),FILE_APPEND);
 				$fname = "";
 				$colected = str_replace("$tmp#","",$colected);
 			}
@@ -232,11 +272,9 @@ function showFilesTest($file){
 				$b = fread($data,1);
 				$colected.=$b;
 			}
-			//file_put_contents($fname,hex2bin($colected),FILE_APPEND);
 			$colected = "";
 		}
 	}
-	//print_r($fnames);
 	return $fnames;
 }
 
@@ -271,13 +309,13 @@ function console(){
 		}else if($op == "show"){
 			//showFiles($wf);
 			if($fnames == ""){
-				$fnames = showFilesTest($wf);
+				$fnames = showFiles($wf);
 			}
 			print_r($fnames);
 		}else if($op == "extract"){
 			$index = readline("index:");
 			//extractFile($index,$wf);
-			extractFileTest($wf,$index);
+			extractFile($wf,$index);
 		}else if($op == "wf"){
 			$wf = readline("work file:");
 			$fnames = "";
@@ -287,8 +325,11 @@ function console(){
 			}
 		}else if($op == "extractAll"){
 			//extractFiles($wf);
-			extractFilesTest($wf);
+			extractFiles($wf);
+		}else if($op == "extractByName"){
+			extractByName($wf,readline("name:"));
 		}
+
 	}
 }
 
