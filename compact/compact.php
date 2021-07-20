@@ -22,38 +22,6 @@ function addFile($toadd,$file){
 
 	fclose($data);
 }
-/*
-function extractFiles($file){
-	$data = fopen($file,"rb");
-	$fname = "";
-	$colected = "";
-	while(!feof($data)){
-		$char = fread($data,1);
-		
-		if($char != "@" && $char != "#"){
-			$colected .= $char;
-		}
-		
-		if($char == "@"){
-			$fname = hex2bin($colected);
-			$colected = "";
-		}
-		if($char == "#"){
-			if($colected != ""){
-				file_put_contents($fname,hex2bin($colected),FILE_APPEND);
-				$colected = "";
-			}
-			$fname = "";
-		}
-		if($fname != "" && strlen($colected) == 10240000){
-			
-			file_put_contents($fname,hex2bin($colected),FILE_APPEND);
-			$colected = "";
-		}
-	}
-
-	fclose($data);
-}*/
 
 function extractFiles($file){
 	$data = fopen($file,"rb");
@@ -89,41 +57,6 @@ function extractFiles($file){
 	}
 }
 
-/*
-function extractFile($index,$file){
-	$data = fopen($file,"rb");
-	$fname = "";
-	$colected = "";
-	$i = 0;
-	while(!feof($data)){
-		$char = fread($data,1);
-		
-		if($char != "@" && $char != "#"){
-			$colected .= $char;
-		}
-		
-		if($char == "@"){
-			$fname = hex2bin($colected);
-			$colected = "";
-		}
-		if($char == "#"){
-			if($colected != ""){
-				if($index == $i){
-					file_put_contents($fname,hex2bin($colected),FILE_APPEND);
-				}
-				$colected = "";
-			}
-			$fname = "";
-			$i++;
-		}
-		if($fname != "" && strlen($colected) == 10240000 && $index == $i){
-			file_put_contents($fname,hex2bin($colected),FILE_APPEND);
-			$colected = "";
-		}
-	}
-	fclose($data);
-}
- */
 function extractFile($file,$index){
 	$data = fopen($file,"rb");
 	$fname = "";
@@ -170,7 +103,7 @@ function extractByName($file,$name){
 	$fname = "";
 	$colected = "";
 	$tmp = "";
-	//$i = 0;
+	
 	while(!feof($data) || $colected != ""){
 		$b = fread($data,10240000);	
 		$colected .= $b;
@@ -188,7 +121,7 @@ function extractByName($file,$name){
 					fclose($data);
 					break;
 				}
-				//$i++;
+				
 				$fname = "";
 				$colected = str_replace("$tmp#","",$colected);
 			}
@@ -208,42 +141,6 @@ function extractByName($file,$name){
 }
 
 
-/*
-function showFiles($file){
-	$data = fopen($file,"rb");
-	$files = [];
-	$fname = "";
-	$i = 0;
-	$colected = "";
-	while(!feof($data)){
-		$char = fread($data,1);
-		
-		if($char != "@" && $char != "#"){
-			$colected .= $char;
-		}
-		
-		if($char == "@"){
-			$fname = hex2bin($colected);
-			$colected = "";
-			
-			$files[$i++] = $fname;
-		}
-		if($char == "#"){
-			if($colected != ""){
-				$colected = "";
-			}
-			$fname = "";
-		}
-		if($fname != "" && strlen($colected) == 10240000){
-			$colected = "";
-		}
-	}
-	print("\n");
-	fclose($data);
-	print_r($files);
-	
-}
- */
 function showFiles($file){
 	$data = fopen($file,"rb");
 	$fname = "";
@@ -296,7 +193,7 @@ function showContent($index,$file){
 	}
 	
 }
-
+/*
 function console(){
 	$wf = "";
 	$fnames = "";
@@ -307,14 +204,14 @@ function console(){
 			$toadd = readline("to add:");
 			addFile($toadd,$wf);
 		}else if($op == "show"){
-			//showFiles($wf);
+			
 			if($fnames == ""){
 				$fnames = showFiles($wf);
 			}
 			print_r($fnames);
 		}else if($op == "extract"){
 			$index = readline("index:");
-			//extractFile($index,$wf);
+			
 			extractFile($wf,$index);
 		}else if($op == "wf"){
 			$wf = readline("work file:");
@@ -324,7 +221,7 @@ function console(){
 				print("$o\n");
 			}
 		}else if($op == "extractAll"){
-			//extractFiles($wf);
+			
 			extractFiles($wf);
 		}else if($op == "extractByName"){
 			extractByName($wf,readline("name:"));
@@ -334,3 +231,4 @@ function console(){
 }
 
 console();
+ */
