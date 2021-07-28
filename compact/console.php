@@ -1,6 +1,40 @@
 <?php
+include("compact.php");
 
-function console(){
+function args($op,$wf){
+	$options = array("--add","--show","--extract","--extract-all");
+
+	if($op == "--add"){
+		$toadd = readline("to add:");
+		addFile($toadd,$wf);
+	}else if($op == "--show"){
+		print_r(showFiles($wf));
+	}else if($op == "--help"){
+		foreach($options as $o){
+			print("$o\n");
+		}
+	}else if($op == "--extract-all"){
+		extractFiles($wf);
+	}else if($op == "--extract"){
+		extractByName($wf,$argv[3]);
+	}
+}
+
+function useArgs($argv){
+	if(array_key_exists(1,$argv)){
+		$op = $argv[1];
+
+		if(array_key_exists(2,$argv)){
+			$wf = $argv[2];
+		}
+		args($op,$wf);
+		die();
+	}
+}
+
+function console($argv){
+	useArgs($argv);
+
 	$wf = "";
 	$fnames = "";
 	while(true){
@@ -36,4 +70,4 @@ function console(){
 	}
 }
 
-console();
+console($argv);
