@@ -1,26 +1,16 @@
 <?php
-
 include("encrypt.php");
+$key = $argv[1];#readline("key:");
+$delimiter = $argv[2];#readline("delimiter");
 
+$txt = $argv[3];#readline("enter text:");
 
-$key = $argv[1];
-$del = $argv[2];
-$f1  = $argv[3];
-$f2  = $argv[4];
+$result = usePattern($txt,$key,$delimiter);
 
-$new = "";
+for($i = 0 ;$i < 2;$i++){
+	$result = usePattern($result,$key,$delimiter);
 
-foreach(file($f1) as $line){
-	$new .= useKey($line,$key,$del);
 }
 
-$a = explode(" ",$new)[0];
-$b = explode(" ",$new)[1];
+print($result);
 
-$final = "";
-
-foreach(file($f2) as $line){
-	$final .= useKey($line,$a,$b);
-}
-
-print($final);
