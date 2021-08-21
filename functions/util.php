@@ -26,8 +26,8 @@ function isWindows(){
 	}
 }
 
-#this require notifu on windows blank in other os
-function toast($message,$title,$exe){
+function toast($message,$title){
+	$exe = __DIR__."\\bin\\notifu";
 	if(isWindows()){
 		exec("@echo off");
 		exec("taskkill /f /im notifu.exe 2>NUL");

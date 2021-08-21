@@ -41,3 +41,8 @@ function deleteFile($fname){
 		unlink($fname);
 	}
 }
+
+/* wont work
+function selfLocation(){
+	return __DIR__;
+}*/
