@@ -42,7 +42,3 @@ function deleteFile($fname){
 	}
 }
 
-/* wont work
-function selfLocation(){
-	return __DIR__;
-}*/
