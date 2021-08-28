@@ -13,4 +13,8 @@ function runInside($ano,$path){
 	chdir($tmp);
 }
 
-runInside($lambda,readline("path:"));
+//runInside($lambda,readline("path:"));
+
+include("../functions/util.php");
+
+_do($lambda,"c:\\users");

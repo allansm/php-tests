@@ -110,3 +110,12 @@ function remoteSize($url) {
 	return $filesize;
 }
 
+function _do($that,$inside){
+	$tmp = getcwd();
+	chdir($inside);
+	$ret = $that();
+	chdir($tmp);
+
+	return $ret;
+}
+
