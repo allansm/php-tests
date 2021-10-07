@@ -1,7 +1,7 @@
 <?php
 include("import/ttodua.php");
-include("../functions/util.php");
-include("../functions/fileHandle.php");
+include("../../php-lib/util.php");
+include("../../php-lib/fileHandle.php");
 
 function toGetSource(){
 	tempWdir("getsource");
