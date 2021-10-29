@@ -16,7 +16,7 @@ $http = has($argv[1],"https")?"https://":"http://";
 $site = $http.$arr[2];
 
 $lines = array_unique(explode("\n\n",$page));
-
+$name = 0;
 foreach($lines as $line){
 	if(!has($line,"<") && !has($line,">") && !has($line,",") && !has($line,"(") && !has($line,"http") && !has($line,"==") && !has($line,"javascript") && !has($line,":")){
 		if(has($line,"/") || has($line,"?")){
@@ -27,7 +27,7 @@ foreach($lines as $line){
 				print("$site$line\n");
 				foreach(getImageLinks("$site$line") as $image){
 					if(remoteSize($image) > 50000){
-						download($image,"");	
+						download2($image,"",$name++.".jpg");	
 					}
 				}
 			}else{
@@ -37,7 +37,7 @@ foreach($lines as $line){
 				print("$site/$line\n");
 				foreach(getImageLinks("$site/$line") as $image){
 					if(remoteSize($image) > 50000){
-						download($image,"");
+						download2($image,"",$name++.".jpg");
 					}
 				}
 			}
@@ -48,7 +48,7 @@ foreach($lines as $line){
 				$line = str_replace("amp;","",$line);
 			}
 			if(remoteSize($line) > 50000){
-				download($line,"");
+				download2($line,"",$name++.".jpg");
 			}
 		}
 	}
