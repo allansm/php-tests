@@ -1,5 +1,5 @@
 <?php
-include("import/ttodua.php");
+//include("import/ttodua.php");
 include("../../php-lib/util.php");
 include("../../php-lib/fileHandle.php");
 
@@ -7,91 +7,66 @@ function toGetSource(){
 	tempWdir("getsource");
 }
 
-function getHttp($request){
-	$page = get_remote_data($request);
-	$page = str_replace("'","\"",$page);
-	$page = str_replace("\"","\n\n",$page);
-
-	$lines = explode("\n",$page);//getLines($page);
-	
-	$http = array();
-	foreach($lines as $line){
-		if(str_starts_with($line,"http") && !has($line,"\n")){
-			array_push($http,$line);
+function check($txt,$pattern){
+	foreach(explode(";",$pattern) as $tmp){
+		if(has($txt,$tmp)){
+			return true;
 		}
 	}
 
-	return $http;
+	return false;
 }
 
+function getValues($link){
+	$html = getContents($link);
+	$mod = str_replace("\n","",$html);
+	$mod = str_replace("'","\"",$mod);
+	$mod = str_replace("\"","\n\n",$mod);
 
-function getImageLinks($request){
-	$page = get_remote_data($request);
-	$page = str_replace("<","\n",$page);
-	$page = str_replace(">","\n",$page);
-	$page = str_replace("'","\"",$page);
+	return explode("\n\n",$mod);
+}
 
-	$lines = explode("\n",$page);//getLines($page);	
+function getHttp($link){
+	$arr = [];
 
-	$images = array();
-	foreach($lines as $line){
-		if(hasPattern($line,"http;src=;.jpg") || hasPattern($line,"http;src=;.png") || hasPattern($line,"http;src=;.gif")){		
-			$url = find($line,"src=\"","\"");
-			if(has($url,".jpg") || has($url,".png") || has($url,".git")){
-				
-				array_push($images,$url);
-			}
-		}
-		if(hasPattern($line,"http;data-src=;.jpg") || hasPattern($line,"http;data-src=;.png") || hasPattern($line,"http;data-src=;.gif")){
-			$url = find($line,"data-src=\"","\"");
-			if(has($url,".jpg") || has($url,".png") || has($url,".git")){
-				
-				array_push($images,$url);
-			}
-		}
-		if(hasPattern($line,"src=;.jpg") || hasPattern($line,"src=;.png") || hasPattern($line,"src=;.gif")){
-			if(!has($line,"http")){
-				$url = find($line,"src=\"","\"");
-				$url = $request.$url;
-
-				array_push($images,$url);
+	foreach(getValues($link) as $tmp){
+		if(hasPattern($tmp,"http;:;//")){
+			if(!check($tmp,"<;>;{;};[;];|")){
+				array_push($arr,$tmp);
 			}
 		}
 	}
-	return $images;
 
+	return $arr;
 }
 
-function getMp4Links($request){
-	$page = get_remote_data($request);
-	$page = str_replace("<","\n",$page);
-	$page = str_replace(">","\n",$page);
-	$page = str_replace("'","\"",$page);
-	$page = str_replace("\"","\n\n",$page);
+function getImageLinks($link){
+	$arr = [];
 
-	$lines = explode("\n",$page);//getLines($page);	
-
-	$mp4 = array();
-	foreach($lines as $line){
-		if(hasPattern($line,"http;.mp4")){
-			array_push($mp4,$line);
+	foreach(getValues($link) as $tmp){
+		$tmp = strtolower($tmp);
+		if(has($tmp,".jpg") || has($tmp,".png") || has($tmp,".gif")){
+			if(!check($tmp,"<;>;{;};[;];|")){
+				array_push($arr,$tmp);
+			}
 		}
 	}
-	return $mp4;
+
+	return $arr;
 }
 
-function getValues($request){
-	$page = get_remote_data($request);
-	$page = str_replace("'","\"",$page);
-	$page = str_replace("\"","\n\n",$page);
+function getMp4Links($link){
+	$arr = [];
 
-	$lines = explode("\n",$page);//getLines($page);
-	
-	$values = array();
-	foreach($lines as $line){
-		if(!has($line,"<") && !has($line,">") && !has($line,"=")){
-			array_push($values,$line);
+	foreach(getValues($link) as $tmp){
+		$tmp = strtolower($tmp);
+		if(has($tmp,".mp4")){
+			if(!check($tmp,"<;>;{;};[;];|")){
+				array_push($arr,$tmp);
+			}
 		}
 	}
-	return $values;
+
+	return $arr;
 }
+
