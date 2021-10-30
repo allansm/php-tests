@@ -1,5 +1,4 @@
 <?php
-//include("import/ttodua.php");
 include("../../php-lib/util.php");
 include("../../php-lib/fileHandle.php");
 
@@ -27,10 +26,22 @@ function getValues($link){
 }
 
 function getHttp($link){
+	$target = $link;
+	$root = str_replace("https://","",$target);
+	$root = str_replace("http://","",$root);
+
+	$root = "http://".explode("/",$root)[0];
+
 	$arr = [];
 
 	foreach(getValues($link) as $tmp){
-		if(hasPattern($tmp,"http;:;//")){
+		if(has($tmp,"./") && !has($tmp,"http")){
+			$tmp = $target.str_replace("./","/",$tmp);
+		}else if(has($tmp,"/") && !has($tmp,"http")){
+			$tmp = $root.$tmp;
+		}
+
+		if(check($tmp,"http;:;//")){
 			if(!check($tmp,"<;>;{;};[;];|")){
 				array_push($arr,$tmp);
 			}
@@ -44,10 +55,11 @@ function getImageLinks($link){
 	$arr = [];
 
 	foreach(getValues($link) as $tmp){
+		$url = $tmp;
 		$tmp = strtolower($tmp);
 		if(has($tmp,".jpg") || has($tmp,".png") || has($tmp,".gif")){
 			if(!check($tmp,"<;>;{;};[;];|")){
-				array_push($arr,$tmp);
+				array_push($arr,$url);
 			}
 		}
 	}
@@ -59,10 +71,11 @@ function getMp4Links($link){
 	$arr = [];
 
 	foreach(getValues($link) as $tmp){
+		$url = $tmp;
 		$tmp = strtolower($tmp);
 		if(has($tmp,".mp4")){
 			if(!check($tmp,"<;>;{;};[;];|")){
-				array_push($arr,$tmp);
+				array_push($arr,$url);
 			}
 		}
 	}
