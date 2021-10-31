@@ -52,9 +52,21 @@ function getHttp($link){
 }
 
 function getImageLinks($link){
+	$target = $link;
+	$root = str_replace("https://","",$target);
+	$root = str_replace("http://","",$root);
+
+	$root = "http://".explode("/",$root)[0];
+
 	$arr = [];
 
 	foreach(getValues($link) as $tmp){
+		if(has($tmp,"./") && !has($tmp,"http")){
+			$tmp = $target.str_replace("./","/",$tmp);
+		}else if(has($tmp,"/") && !has($tmp,"http")){
+			$tmp = $root.$tmp;
+		}
+		
 		$url = $tmp;
 		$tmp = strtolower($tmp);
 		if(has($tmp,".jpg") || has($tmp,".png") || has($tmp,".gif")){
