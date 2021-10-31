@@ -9,7 +9,18 @@ function getImages($site){
 	foreach(getImageLinks($site) as $image){
 		if(has($image,"http")){
 			print("$image\n");
-			downloadOnce($image);	
+
+
+			$ext = "";
+			if(has($image,".jpg")){
+				$ext = ".jpg";	
+			}else if(has($image,".png")){
+				$ext = ".png";	
+			}else if(has($image,".gif")){
+				$ext = ".gif";	
+			}
+
+			@downloadOnce($image,"","",$ext);	
 		}
 	}
 
@@ -17,6 +28,9 @@ function getImages($site){
 }
 
 getImages($argv[1]);
-foreach(getHttp($argv[1]) as $tmp){	
+
+$arr = getHttp($argv[1]);
+shuffle($arr);
+foreach($arr as $tmp){	
 	getImages($tmp);
 }

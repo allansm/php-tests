@@ -7,13 +7,15 @@ function toGetSource(){
 }
 
 function check($txt,$pattern){
+	$flag = false;
+
 	foreach(explode(";",$pattern) as $tmp){
 		if(has($txt,$tmp)){
-			return true;
-		}
+			$flag = true;
+		}	
 	}
 
-	return false;
+	return $flag;
 }
 
 function getValues($link){
@@ -21,6 +23,8 @@ function getValues($link){
 	$mod = str_replace("\n","",$html);
 	$mod = str_replace("'","\"",$mod);
 	$mod = str_replace("\"","\n\n",$mod);
+	$mod = str_replace("<","\n\n",$mod);
+	$mod = str_replace(">","\n\n",$mod);
 
 	return explode("\n\n",$mod);
 }
@@ -30,25 +34,34 @@ function getHttp($link){
 	$root = str_replace("https://","",$target);
 	$root = str_replace("http://","",$root);
 
-	$root = "http://".explode("/",$root)[0];
+	$pro = "http://";
+	if(has($link,"http://")){
+		$pro = "http://";
+	}else if(has($link,"https://")){
+		$pro = "https://";
+	}
+
+	$root = $pro.explode("/",$root)[0];
 
 	$arr = [];
 
 	foreach(getValues($link) as $tmp){
-		if(has($tmp,"./") && !has($tmp,"http")){
+		if(str_starts_with($tmp,"./") && !has($tmp,"http")){
 			$tmp = $target.str_replace("./","/",$tmp);
-		}else if(has($tmp,"/") && !has($tmp,"http")){
+		}else if(str_starts_with($tmp,"/") && !has($tmp,"http")){
 			$tmp = $root.$tmp;
+		}else if(!has($tmp,"http")){
+			$tmp = "$root/$tmp";
 		}
 
-		if(check($tmp,"http;:;//")){
-			if(!check($tmp,"<;>;{;};[;];|")){
+		if(has($tmp,"http") && has($tmp,"//")){
+			if(!has($tmp,"<") && !has($tmp,">") && !has($tmp,"{") && !has($tmp,"}") && !has($tmp,"[") && !has($tmp,"]") && !has($tmp,"|") && !has($tmp,"(") && !has($tmp,")")){
 				array_push($arr,$tmp);
 			}
 		}
 	}
 
-	return $arr;
+	return array_unique($arr);
 }
 
 function getImageLinks($link){
@@ -86,7 +99,7 @@ function getMp4Links($link){
 		$url = $tmp;
 		$tmp = strtolower($tmp);
 		if(has($tmp,".mp4")){
-			if(!check($tmp,"<;>;{;};[;];|")){
+			if(!check($tmp,"<;>;{;};[;];|;(;)")){
 				array_push($arr,$url);
 			}
 		}
