@@ -1,6 +1,12 @@
 <?php
 
-$hex = strtoupper(bin2hex(implode("\n",file($argv[1]))));
+$hex = "";
+
+if(file_exists($argv[1])){
+	$hex = strtoupper(bin2hex(implode("\n",file($argv[1]))));
+}else{
+	$hex = strtoupper(bin2hex($argv[1]));
+}
 
 $c = 0;
 $x = -1;
